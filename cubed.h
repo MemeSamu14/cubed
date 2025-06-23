@@ -6,7 +6,7 @@
 /*   By: sfiorini <sfiorini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 10:45:23 by sfiorini          #+#    #+#             */
-/*   Updated: 2025/06/21 12:19:51 by sfiorini         ###   ########.fr       */
+/*   Updated: 2025/06/23 16:33:48 by sfiorini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 #include <stdio.h>
 #include <fcntl.h>
 
-enum	controls {
+enum	e_controls {
 	FALSE = 0,
 	TRUE = 1,
 	CORRECT = 2,
@@ -31,6 +31,7 @@ typedef struct s_program
 	char	**map;		// matrice mappa
 	int		max_len;	// lunghezza massima delle righe della mappa
 	int		start_map;	// indice per l'inizio della mappa
+	int		row;	// numero di righe
 	char	*map_name;	// nome della mappa
 	char	*buff;		// buffer next line
 	char	*no;		// north texture
@@ -59,6 +60,8 @@ void	init(t_program *prg, char *map_name);
 	//	check_textures.c
 	int		check_textures(t_program *prg);
 	int		open_file(char *file);
+	int		check_textures_1(t_program *prg);
+	int		check_textures_2(t_program *prg);
 
 	//	check_colors.c
 	int	check_colors(t_program *prg);
@@ -83,8 +86,23 @@ void	init(t_program *prg, char *map_name);
 
 	//	check_map
 	int		check_map(t_program *prg);
+	void	init_map(t_program *prg);
+	void	add_line(t_program *prg, int i);
+	void	add_space_line(t_program *prg, int i);
+	//	check_map_2
+	int		alloc_map(t_program *prg);
 	int		matrix_row(t_program *prg);
+	void	skippers(t_program *prg, int fd);
 	void	skips_empty_lines(t_program *prg, int fd);
-	
+	//	check_map_3
+	int		check_walls(t_program *prg);
+	int		open_walls(t_program *prg, int i, int j);
+	int		valid_map_char(t_program *prg);
+	int		is_valid_char(t_program *prg, int i, int j);
+	int		is_texture(t_program *prg, int i, int j);
 
+	//	close.c
+	void	free_all(t_program *prg);
+	void	free_parsing(t_program *prg);
+	
 #endif

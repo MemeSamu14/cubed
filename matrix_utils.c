@@ -6,7 +6,7 @@
 /*   By: sfiorini <sfiorini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 16:56:55 by sfiorini          #+#    #+#             */
-/*   Updated: 2025/06/20 17:30:16 by sfiorini         ###   ########.fr       */
+/*   Updated: 2025/06/23 15:39:28 by sfiorini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	print_matrix(char **matrix)
 	i = 0;
 	while (matrix[i])
 	{
-		printf("i: %d |%s|\n", i, matrix[i]);
+		printf("i: |%s|\n", matrix[i]);
 		i++;
 	}
 }
@@ -38,6 +38,8 @@ void	free_matrix(char **matrix)
 {
 	int	j;
 
+	if (matrix == NULL)
+		return ;
 	j = 0;
 	while (matrix[j])
 	{

@@ -8,8 +8,15 @@ CFLAGS = -Wall -Werror -Wextra -g
 
 SRC = main.c \
 	parsing/parsing.c \
+	parsing/check_colors.c \
+	parsing/check_info.c \
+	parsing/check_map.c \
+	parsing/check_map_2.c \
+	parsing/check_map_3.c \
+	parsing/check_textures.c \
 	exec/exec.c \
-	matrix_utils.c
+	matrix_utils.c \
+	close.c
 
 all: $(NAME)
 

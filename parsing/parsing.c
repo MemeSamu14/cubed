@@ -6,7 +6,7 @@
 /*   By: sfiorini <sfiorini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 10:57:34 by sfiorini          #+#    #+#             */
-/*   Updated: 2025/06/20 18:29:55 by sfiorini         ###   ########.fr       */
+/*   Updated: 2025/06/23 16:33:14 by sfiorini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,23 @@
 
 int	parsing(t_program *prg)
 {
-	if (check_exetension(prg) == ERROR) // per l'estenzione
+	if (check_exetension(prg) == ERROR)
 		return (ERROR);
-	if (existing_check(prg) == ERROR)	// per l'esitenza del file di input
+	if (existing_check(prg) == ERROR)
 		return (ERROR);
-	if (check_info(prg) == ERROR)		// textures
+	if (check_info(prg) == ERROR)
 		return (ERROR);
-	if (check_info_valid(prg) == ERROR)	// info verificate ???
+	if (check_info_valid(prg) == ERROR)
+	{
+		free_parsing(prg);
 		return (ERROR);
+	}
 	if (check_map(prg) == ERROR)
+	{
+		free_parsing(prg);
 		return (ERROR);
+	}
+	print_matrix(prg->map);
 	return (0);
 }
 
@@ -31,13 +38,13 @@ int	check_exetension(t_program *prg)
 {
 	int	index;
 
-	index = ft_strlen(prg->map_name) - 1; // excluding the nullbyte
-	if (prg->map_name[index] == 'b' && 
-		prg->map_name[index - 1] &&
-		prg->map_name[index - 1] == 'u' && 
-		prg->map_name[index - 2] &&
-		prg->map_name[index - 2] == 'c' &&
-		prg->map_name[index - 3] &&
+	index = ft_strlen(prg->map_name) - 1;
+	if (prg->map_name[index] == 'b' && \
+		prg->map_name[index - 1] && \
+		prg->map_name[index - 1] == 'u' && \
+		prg->map_name[index - 2] && \
+		prg->map_name[index - 2] == 'c' && \
+		prg->map_name[index - 3] && \
 		prg->map_name[index - 3] == '.')
 		return (CORRECT);
 	else

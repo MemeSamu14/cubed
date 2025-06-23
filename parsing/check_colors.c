@@ -6,7 +6,7 @@
 /*   By: sfiorini <sfiorini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 18:24:35 by sfiorini          #+#    #+#             */
-/*   Updated: 2025/06/20 18:37:01 by sfiorini         ###   ########.fr       */
+/*   Updated: 2025/06/23 16:38:44 by sfiorini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,25 +77,27 @@ int	check_char(t_program *prg)
 {
 	int		i;
 
-	i = 0;
-	while (prg->f[i])
+	i = -1;
+	if (prg->f)
 	{
-		if ((prg->f[i] < '0' || prg->f[i] > '9') && prg->f[i] != ',')
+		while (prg->f && prg->f[++i])
 		{
-			write(2, "Error\nF: Ivalid color code\n", 27);
-			return (ERROR);
+			if ((prg->f[i] < '0' || prg->f[i] > '9') && prg->f[i] != ',')
+				return (write(2, "Error\nF: Ivalid color code\n", 27), ERROR);
 		}
-		i++;
 	}
-	i = 0;
-	while (prg->c[i])
+	else
+		return (write(2, "Error\nF: Ivalid color code\n", 27), ERROR);
+	i = -1;
+	if (prg->c)
 	{
-		if ((prg->c[i] < '0' || prg->c[i] > '9') && prg->c[i] != ',')
+		while (prg->c && prg->c[++i])
 		{
-			write(2, "Error\nC: Ivalid color code\n", 27);
-			return (ERROR);
+			if ((prg->c[i] < '0' || prg->c[i] > '9') && prg->c[i] != ',')
+				return (write(2, "Error\nC: Ivalid color code\n", 27), ERROR);
 		}
-		i++;
 	}
+	else
+		return (write(2, "Error\nC: Ivalid color code\n", 27), ERROR);
 	return (CORRECT);
 }

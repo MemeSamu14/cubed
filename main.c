@@ -6,7 +6,7 @@
 /*   By: sfiorini <sfiorini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 10:49:19 by sfiorini          #+#    #+#             */
-/*   Updated: 2025/06/20 18:37:52 by sfiorini         ###   ########.fr       */
+/*   Updated: 2025/06/23 16:22:54 by sfiorini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int	main(int ac, char **av)
 		return (ERROR);
 	// else if (exec() == ERROR)
 	// 	return (ERROR);
+	free_all(&prg);
 	return (0);
 }
 
@@ -33,6 +34,7 @@ void	init(t_program *prg, char *map_name)
 	prg->map = NULL;
 	prg->max_len = 0;
 	prg->start_map = 0;
+	prg->row = 0;
 	prg->map_name = ft_strdup(map_name);
 	prg->buff = NULL;
 	prg->no = NULL;

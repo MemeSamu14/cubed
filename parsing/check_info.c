@@ -6,7 +6,7 @@
 /*   By: sfiorini <sfiorini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 18:20:22 by sfiorini          #+#    #+#             */
-/*   Updated: 2025/06/20 18:55:44 by sfiorini         ###   ########.fr       */
+/*   Updated: 2025/06/23 16:34:28 by sfiorini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	find_id(t_program *prg)
 	while (prg->buff[i] && (prg->buff[i] == ' ' || prg->buff[i] == '	'))
 		i++;
 	if (prg->buff[i] == '\0' || prg->buff[i] == '\n')
-		return (WRONG); // righe con solo spazi e tab
+		return (WRONG);
 	if (check_id(prg, prg->buff + i) == ERROR)
 		return (ERROR);
 	return (CORRECT);
@@ -61,15 +61,15 @@ int	check_id(t_program *prg, char *buff)
 	if (ft_strncmp(buff, "NO", 2) == 0)
 		flag = set_id(prg, "NO", buff + 2);
 	else if (ft_strncmp(buff, "SO", 2) == 0)
-		flag = set_id(prg, "SO", buff + 2);	
+		flag = set_id(prg, "SO", buff + 2);
 	else if (ft_strncmp(buff, "WE", 2) == 0)
-		flag = set_id(prg, "WE", buff + 2);	
+		flag = set_id(prg, "WE", buff + 2);
 	else if (ft_strncmp(buff, "EA", 2) == 0)
-		flag = set_id(prg, "EA", buff + 2);	
+		flag = set_id(prg, "EA", buff + 2);
 	else if (ft_strncmp(buff, "F", 1) == 0)
 		set_id_num(prg, "F", buff + 1);
 	else if (ft_strncmp(buff, "C", 1) == 0)
-		set_id_num(prg, "C", buff + 1);	
+		set_id_num(prg, "C", buff + 1);
 	if (flag == ERROR)
 		return (write(2, "Error\nInvalid Characters\n", 25), ERROR);
 	return (CORRECT);
@@ -99,11 +99,11 @@ int	set_id(t_program *prg, char *id, char *buff)
 
 void	set_id_num(t_program *prg, char *id, char *buff)
 {
-	int		i;
+	int	i;
 
 	i = 0;
 	while (buff[i] && (buff[i] == ' ' || buff[i] == '	'))
-		i++;	
+		i++;
 	if (ft_strncmp(id, "F", 1) == 0)
 		prg->f = ft_substr(buff, i, (ft_strlen(buff) - 1 - i));
 	if (ft_strncmp(id, "C", 1) == 0)
