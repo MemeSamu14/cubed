@@ -6,13 +6,12 @@
 /*   By: sfiorini <sfiorini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 10:49:19 by sfiorini          #+#    #+#             */
-/*   Updated: 2025/06/23 16:22:54 by sfiorini         ###   ########.fr       */
+/*   Updated: 2025/06/25 18:12:24 by sfiorini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cubed.h"
 
-void	print_all(t_program *prg);
 
 int	main(int ac, char **av)
 {
@@ -23,8 +22,8 @@ int	main(int ac, char **av)
 	init(&prg, av[1]);
 	if (parsing(&prg) == ERROR)
 		return (ERROR);
-	// else if (exec() == ERROR)
-	// 	return (ERROR);
+	else if (exec(&prg) == ERROR)
+		return (ERROR);
 	free_all(&prg);
 	return (0);
 }

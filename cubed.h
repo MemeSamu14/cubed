@@ -6,7 +6,7 @@
 /*   By: sfiorini <sfiorini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 10:45:23 by sfiorini          #+#    #+#             */
-/*   Updated: 2025/06/23 16:33:48 by sfiorini         ###   ########.fr       */
+/*   Updated: 2025/06/26 12:44:04 by sfiorini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,12 @@
 #include "utils/utils.h"
 #include <unistd.h>
 #include <stdio.h>
+#include <math.h>
 #include <fcntl.h>
+# include "minilibx-linux/mlx.h"
+# include "minilibx-linux/mlx_int.h"
+# include <X11/X.h>
+# include <X11/keysym.h>
 
 enum	e_controls {
 	FALSE = 0,
@@ -26,29 +31,64 @@ enum	e_controls {
 	ERROR = 4
 };
 
+
+typedef struct	s_variables {
+	int		k;
+	int		z;
+	int		i;
+	int		j;
+}	t_variables;
+
+
+typedef struct	s_data {
+	void	*img;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+}	t_data;
+
 typedef struct s_program
 {
-	char	**map;		// matrice mappa
-	int		max_len;	// lunghezza massima delle righe della mappa
-	int		start_map;	// indice per l'inizio della mappa
-	int		row;	// numero di righe
-	char	*map_name;	// nome della mappa
-	char	*buff;		// buffer next line
-	char	*no;		// north texture
-	char	*so;		// south texture
-	char	*we;		// west texture
-	char	*ea;		// east texture
-	char	*f;			// floor color
-	char	*c;			// celing color
-	char	**code_f;	// codice di f splittato sulle virgole
-	char	**code_c;	// codice di c splittato sulle virgole
+	char		**map;		// matrice mappa
+	int			max_len;	// lunghezza massima delle righe della mappa
+	int			start_map;	// indice per l'inizio della mappa
+	int			row;	// numero di righe
+	char		*map_name;	// nome della mappa
+	char		*buff;		// buffer next line
+	char		*no;		// north texture
+	char		*so;		// south texture
+	char		*we;		// west texture
+	char		*ea;		// east texture
+	char		*f;			// floor color
+	char		*c;			// celing color
+	char		**code_f;	// codice di f splittato sulle virgole
+	char		**code_c;	// codice di c splittato sulle virgole
+
+	// s_graphic
+	void	*mlx;
+	void	*win;
+
+	void	*wall_img;
+	void	*floor_img;
+	void	*player_img;
+	void	*empty_img;
+	int		height;
+	int		width;
+	char	orientation;
+
+	t_data	img_bg;
+
 }	t_program;
+
+// exec
+	// exec.c
+	int		exec(t_program *prg);
+	int	moves(void *arg);
 
 // main.c
 void	init(t_program *prg, char *map_name);
 
-// exec
-	// exec.c
 
 // parsing
 	//parsing.c
@@ -56,7 +96,7 @@ void	init(t_program *prg, char *map_name);
 	int		check_exetension(t_program *prg);
 	int		existing_check(t_program *prg);
 	int		check_info_valid(t_program *prg);
-	
+	void	change_player_id(t_program *prg);
 	//	check_textures.c
 	int		check_textures(t_program *prg);
 	int		open_file(char *file);
@@ -104,5 +144,27 @@ void	init(t_program *prg, char *map_name);
 	//	close.c
 	void	free_all(t_program *prg);
 	void	free_parsing(t_program *prg);
-	
+
+//	graphic
+	//	color_bg.c
+	void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
+	int	color_bg(t_program *prg);	
+	//	graphic.c
+	int	graphic(t_program *prg);
+	//	minimap.c
+	void	mini_map(t_program *prg);
+	void	print_images(t_program *prg);
+	void	find_player(t_program *prg, int *x, int *y);
+	void	full_fill_black(t_program *prg);
+	//create_images.c
+	int	create_images(t_program *prg);
+
+
+//	hooks.c
+int	mouse_controls(t_program *prg);
+int	key_controls(int keysim, t_program *prg);
+
+
+
+
 #endif

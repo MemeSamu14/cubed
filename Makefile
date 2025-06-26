@@ -1,10 +1,14 @@
 NAME = cubed
 
+MLX = `libmlx-Linux.a
+MLX_DIR = minilibx-linux/
+
 UTILS = utils/utils.a
 UTILS_DIR = utils/
 
 CC = cc
 CFLAGS = -Wall -Werror -Wextra -g 
+LIBX_FLAGS = -Lminilibx-linux -lmlx -lXext -lX11 -Lutils
 
 SRC = main.c \
 	parsing/parsing.c \
@@ -16,7 +20,12 @@ SRC = main.c \
 	parsing/check_textures.c \
 	exec/exec.c \
 	matrix_utils.c \
-	close.c
+	close.c \
+	hooks.c \
+	graphic/color_bg.c \
+	graphic/graphic.c \
+	graphic/mini_map.c \
+	graphic/create_images.c 
 
 all: $(NAME)
 
@@ -26,8 +35,12 @@ $(PRINTF):
 $(UTILS):
 	$(MAKE) -C $(UTILS_DIR)
 
-$(NAME): $(PRINTF) $(UTILS)
-	$(CC) $(CFLAGS) $(SRC) $(UTILS) -o $(NAME)
+$(MLX):
+	@$(MAKE) -C $(MLX_DIR)
+
+$(NAME): $(MLX) $(PRINTF) $(UTILS)
+	$(CC) $(CFLAGS)  $(SRC) $(UTILS) $(LIBX_FLAGS) -g -o $(NAME)
+
 
 clean:
 	rm -f

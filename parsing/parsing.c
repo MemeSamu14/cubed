@@ -6,7 +6,7 @@
 /*   By: sfiorini <sfiorini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 10:57:34 by sfiorini          #+#    #+#             */
-/*   Updated: 2025/06/23 16:33:14 by sfiorini         ###   ########.fr       */
+/*   Updated: 2025/06/25 15:35:37 by sfiorini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,36 @@ int	parsing(t_program *prg)
 		free_parsing(prg);
 		return (ERROR);
 	}
+	change_player_id(prg);
 	print_matrix(prg->map);
 	return (0);
+}
+
+void	change_player_id(t_program *prg)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (prg->map[i])
+	{
+		j = 0;
+		while (prg->map[i][j])
+		{
+			if (prg->map[i][j] == 'N' || \
+				prg->map[i][j] == 'S' || \
+				prg->map[i][j] == 'W' || \
+				prg->map[i][j] == 'E')
+			{
+				prg->orientation = prg->map[i][j]; 
+				prg->map[i][j] = 'P';
+				return ;
+			}
+			j++;
+		}
+		i++;
+	}
+	return ;
 }
 
 int	check_exetension(t_program *prg)
