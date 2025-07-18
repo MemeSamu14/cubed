@@ -6,7 +6,7 @@
 /*   By: sfiorini <sfiorini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 10:45:23 by sfiorini          #+#    #+#             */
-/*   Updated: 2025/07/16 15:49:18 by sfiorini         ###   ########.fr       */
+/*   Updated: 2025/07/16 17:36:38 by sfiorini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,8 @@ void	movement(t_player *movement);
 void	rotation(t_player *movement);
 float	calculate_distance(t_exec *exec, float angle);
 int		touch(float x, float y, char **map);
-void	tre_d_view(t_exec *exec);
 void	draw_vertical_line(t_exec *exec, int x, float distance);
 void	put_pixel(int x, int y, int color, t_exec *exec);
+void	tred_word(t_exec *exec);
 
 #endif

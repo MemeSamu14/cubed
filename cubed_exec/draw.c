@@ -6,7 +6,7 @@
 /*   By: sfiorini <sfiorini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/15 11:24:41 by sfiorini          #+#    #+#             */
-/*   Updated: 2025/07/16 15:55:38 by sfiorini         ###   ########.fr       */
+/*   Updated: 2025/07/18 11:35:55 by sfiorini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ int	draw_player(t_exec *exec, int v)
 		{
 			draw_line(exec, exec->p.x + 0.5, \
 			exec->p.y, start);
-			draw_vertical_line(exec, i, calculate_distance(exec, start));
+			// draw_vertical_line(exec, i, calculate_distance(exec, start));
 			start += PI / WIDTH / 3;
 			i++;
 		}
@@ -142,7 +142,7 @@ int	draw_loop(t_exec *exec)
 	draw_player(exec, TRUE);
 	movement(&exec->p);
 	rotation(&exec->p);
-	// tre_d_view(exec);
+	tred_word(exec);
     mlx_put_image_to_window(exec->mlx, exec->win, exec->img, 0, 0);
 	return (0);
 }
