@@ -6,7 +6,7 @@
 /*   By: sfiorini <sfiorini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/15 11:24:41 by sfiorini          #+#    #+#             */
-/*   Updated: 2025/07/18 11:35:55 by sfiorini         ###   ########.fr       */
+/*   Updated: 2025/07/18 17:19:19 by sfiorini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ int	draw_map(t_exec *exec)
 	return (0);
 }
 
-
 int	touch(float x, float y, char **map)
 {
 	if (map[(int)x][(int)y] == '1')
@@ -104,7 +103,6 @@ int	draw_player(t_exec *exec, int v)
 		{
 			draw_line(exec, exec->p.x + 0.5, \
 			exec->p.y, start);
-			// draw_vertical_line(exec, i, calculate_distance(exec, start));
 			start += PI / WIDTH / 3;
 			i++;
 		}
@@ -138,11 +136,11 @@ void	draw_bg(t_exec *exec, int color_f, int color_c)
 int	draw_loop(t_exec *exec)
 {
 	draw_bg(exec, 0x008F39, 0xA2CADF);
-	draw_map(exec);
-	draw_player(exec, TRUE);
-	movement(&exec->p);
+	movement(&exec->p, exec->map);
 	rotation(&exec->p);
 	tred_word(exec);
+	draw_map(exec);
+	draw_player(exec, TRUE);
     mlx_put_image_to_window(exec->mlx, exec->win, exec->img, 0, 0);
 	return (0);
 }

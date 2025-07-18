@@ -6,7 +6,7 @@
 /*   By: sfiorini <sfiorini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 10:45:23 by sfiorini          #+#    #+#             */
-/*   Updated: 2025/07/16 17:36:38 by sfiorini         ###   ########.fr       */
+/*   Updated: 2025/07/18 16:59:39 by sfiorini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int		matrix_len(char **matrix);
 void	free_matrix(char **matrix);
 void	free_matrix_len(char **matrix, int len);
 char	**matrix_dup(char **old_mtx);
-void	movement(t_player *movement);
+void	movement(t_player *p, char **map);
 void	rotation(t_player *movement);
 float	calculate_distance(t_exec *exec, float angle);
 int		touch(float x, float y, char **map);

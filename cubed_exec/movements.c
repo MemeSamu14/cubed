@@ -6,7 +6,7 @@
 /*   By: sfiorini <sfiorini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 11:06:05 by sfiorini          #+#    #+#             */
-/*   Updated: 2025/07/16 11:12:39 by sfiorini         ###   ########.fr       */
+/*   Updated: 2025/07/18 17:17:55 by sfiorini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,31 +24,45 @@ void	rotation(t_player *p)
 		p->angle = 2 * PI;
 }
 
-void	movement(t_player *p)
+void	movement(t_player *p, char **map)
 {
 	float	sin_a;
 	float	cos_a;
 
 	sin_a = sin(p->angle);
 	cos_a = cos(p->angle);
+
 	if (p->move_up == TRUE)
 	{
-		p->x -= cos_a * SPEED;
-		p->y -= sin_a * SPEED;
+		if (touch(p->x - (cos_a * SPEED), p->y - (sin_a * SPEED), map) == FALSE)
+		{
+			p->x -= cos_a * SPEED;
+			p->y -= sin_a * SPEED;
+		}
 	}
 	if (p->move_down == TRUE)
 	{
-		p->x += cos_a * SPEED;
-		p->y += sin_a * SPEED;
+		if (touch(p->x + (cos_a * SPEED), p->y + (sin_a * SPEED), map) == FALSE)
+		{
+			p->x += cos_a * SPEED;
+			p->y += sin_a * SPEED;
+		}
 	}
 	if (p->move_right == TRUE)
 	{
-		p->y -= cos_a * SPEED;
-		p->x += sin_a * SPEED;
+		if (touch(p->x + (sin_a * SPEED), p->y - (cos_a * SPEED), map) == FALSE)
+		{
+			p->x += sin_a * SPEED;
+			p->y -= cos_a * SPEED;
+		}
 	}
 	if (p->move_left == TRUE)
 	{
-		p->y += cos_a * SPEED;
-		p->x -= sin_a * SPEED;
+		if (touch(p->x - (sin_a * SPEED), p->y + (cos_a * SPEED), map) == FALSE)
+		{
+			p->x -= sin_a * SPEED;
+			p->y += cos_a * SPEED;
+		}
 	}
+
 }
