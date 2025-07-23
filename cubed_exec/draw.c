@@ -6,7 +6,7 @@
 /*   By: sfiorini <sfiorini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/15 11:24:41 by sfiorini          #+#    #+#             */
-/*   Updated: 2025/07/18 17:19:19 by sfiorini         ###   ########.fr       */
+/*   Updated: 2025/07/23 12:57:15 by sfiorini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,14 +133,42 @@ void	draw_bg(t_exec *exec, int color_f, int color_c)
 	}
 }
 
+void	draw_texture(t_exec *exec)
+{
+	int		x;
+	int		y;
+	int		index;
+	// char	**color;
+	int		num = 0;
+
+	x = 0;
+	index = 0;
+	while (x < 720)
+	{
+		y = 0;
+		while (y < 720)
+		{
+			num = ((exec->t.xpm_n[index + 2] & 0xFF) << 16) | \
+			((exec->t.xpm_n[index + 1] & 0xFF) << 8) | \
+			(exec->t.xpm_n[index + 0] & 0xFF);
+			put_pixel(y, x, num , exec);
+			y++;
+			index += 4;
+		}
+		x++;
+	}
+}
+
+
 int	draw_loop(t_exec *exec)
 {
-	draw_bg(exec, 0x008F39, 0xA2CADF);
-	movement(&exec->p, exec->map);
-	rotation(&exec->p);
-	tred_word(exec);
-	draw_map(exec);
-	draw_player(exec, TRUE);
+	// draw_bg(exec, 0x008F39, 0xA2CADF);
+	// movement(&exec->p, exec->map);
+	// rotation(&exec->p);
+	// tred_word(exec);
+	draw_texture(exec);
+	// draw_map(exec);
+	// draw_player(exec, TRUE);
     mlx_put_image_to_window(exec->mlx, exec->win, exec->img, 0, 0);
 	return (0);
 }

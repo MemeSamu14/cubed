@@ -6,7 +6,7 @@
 /*   By: sfiorini <sfiorini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 10:45:23 by sfiorini          #+#    #+#             */
-/*   Updated: 2025/07/18 16:59:39 by sfiorini         ###   ########.fr       */
+/*   Updated: 2025/07/23 10:31:02 by sfiorini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,15 @@ typedef struct s_player
 }	t_player;
 
 
+typedef struct s_texture
+{
+	void	*img_n;
+	char	*xpm_n;	
+}	t_texture;
+
 typedef struct s_exec
 {
-	char		**map;		// matrice mappa
+	char	**map;		// matrice mappa
 	// s_graphic
 	void	*mlx;
 	void	*win;
@@ -66,6 +72,7 @@ typedef struct s_exec
 	int bpp;
 	int size_line;
 	int endian;
+	t_texture	t;
 	t_player p;
 }	t_exec;
 

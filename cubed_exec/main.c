@@ -6,7 +6,7 @@
 /*   By: sfiorini <sfiorini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/15 10:42:12 by sfiorini          #+#    #+#             */
-/*   Updated: 2025/07/16 11:22:53 by sfiorini         ###   ########.fr       */
+/*   Updated: 2025/07/23 12:46:08 by sfiorini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,28 @@ char	**get_map(void)
     return (map);
 }
 
+
+void	init_texture(t_exec *exec)
+{
+	char	*path_img = "wall.xpm";
+	int		height = 800;
+	int		width = 800;
+
+	exec->t.img_n = mlx_xpm_file_to_image(exec->mlx, path_img, &width, &height);
+	if (exec->t.img_n == NULL)
+		printf("culo");
+	exec->t.xpm_n = mlx_get_data_addr(exec->t.img_n, &exec->bpp, &exec->size_line, &exec->endian);
+	
+
+	
+	printf("bpp: %d\n", exec->bpp);
+	printf("endian: %d\n", exec->endian);
+	printf("size line: %d\n", exec->size_line);
+	// 216 71 21
+	printf("r: %d, g: %d, b: %d, t: %d\n", exec->t.xpm_n[2], exec->t.xpm_n[1], exec->t.xpm_n[0], exec->t.xpm_n[3]);
+}
+
+
 void	init(t_exec *exec)
 {
 	exec->map = get_map();
@@ -72,8 +94,11 @@ void	init(t_exec *exec)
 	exec->mlx = mlx_init();
 	exec->win = mlx_new_window(exec->mlx, WIDTH, HEIGHT, "Cubed");
 	exec->img = mlx_new_image(exec->mlx, WIDTH, HEIGHT);
+	init_texture(exec);
 	exec->data = mlx_get_data_addr(exec->img, &exec->bpp, &exec->size_line, &exec->endian);
 }
+
+
 
 int	main(void)
 {
@@ -83,6 +108,7 @@ int	main(void)
 	mlx_hook(exec.win, 2, 1L << 0, key_controls, &exec);
 	mlx_hook(exec.win, 3, 1L << 1, key_release, &exec);
 	mlx_hook(exec.win, 17, 1L << 3, mouse_controls, &exec);
+	
     mlx_loop_hook(exec.mlx, draw_loop, &exec);
 	mlx_loop(exec.mlx);
 	return (0);
