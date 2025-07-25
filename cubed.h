@@ -6,7 +6,7 @@
 /*   By: sfiorini <sfiorini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 10:45:23 by sfiorini          #+#    #+#             */
-/*   Updated: 2025/06/26 12:44:04 by sfiorini         ###   ########.fr       */
+/*   Updated: 2025/07/25 18:24:42 by sfiorini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,13 @@
 # include <X11/X.h>
 # include <X11/keysym.h>
 
+#define WIDTH 1920
+#define HEIGHT 1080
+#define BLOCK 32
+#define PI 3.1415926535
+#define SPEED 0.2
+#define ANGLE_SPEED 0.1
+
 enum	e_controls {
 	FALSE = 0,
 	TRUE = 1,
@@ -31,6 +38,12 @@ enum	e_controls {
 	ERROR = 4
 };
 
+enum	e_orient {
+	NORD = 0,
+	SUD = 1,
+	EST = 2,
+	OVEST = 3,
+};
 
 typedef struct	s_variables {
 	int		k;
@@ -40,20 +53,65 @@ typedef struct	s_variables {
 }	t_variables;
 
 
-typedef struct	s_data {
-	void	*img;
-	char	*addr;
-	int		bits_per_pixel;
-	int		line_length;
+
+
+typedef struct s_player
+{
+	float	x;
+	float	y;
+	float	angle;
+
+	int		move_up;
+	int		move_down;
+	int		move_left;
+	int		move_right;
+	int		rotate_left;
+	int		rotate_right;
+	
+}	t_player;
+
+
+typedef struct s_texture
+{
+	void	*img_n;
+	char	*xpm_n;
+	void	*img_s;
+	char	*xpm_s;
+	void	*img_e;
+	char	*xpm_e;
+	void	*img_o;
+	char	*xpm_o;
+	int		bpp;
+	int		size_line;
 	int		endian;
-}	t_data;
+}	t_texture;
+
+typedef struct s_exec
+{
+	char	**map;		// matrice mappa
+	void	*mlx;
+	void	*win;
+	void	*img;
+
+	char	*data;
+	int		bpp;
+	int		size_line;
+	int		endian;
+	float	view_x;
+	float	view_y;
+	int		orientation;
+	t_texture	t;
+	t_player	p;
+}	t_exec;
+
+
 
 typedef struct s_program
 {
 	char		**map;		// matrice mappa
 	int			max_len;	// lunghezza massima delle righe della mappa
 	int			start_map;	// indice per l'inizio della mappa
-	int			row;	// numero di righe
+	int			row;		// numero di righe
 	char		*map_name;	// nome della mappa
 	char		*buff;		// buffer next line
 	char		*no;		// north texture
@@ -64,27 +122,11 @@ typedef struct s_program
 	char		*c;			// celing color
 	char		**code_f;	// codice di f splittato sulle virgole
 	char		**code_c;	// codice di c splittato sulle virgole
+	char		orientation;
+	t_exec		exec;
 
-	// s_graphic
-	void	*mlx;
-	void	*win;
-
-	void	*wall_img;
-	void	*floor_img;
-	void	*player_img;
-	void	*empty_img;
-	int		height;
-	int		width;
-	char	orientation;
-
-	t_data	img_bg;
 
 }	t_program;
-
-// exec
-	// exec.c
-	int		exec(t_program *prg);
-	int	moves(void *arg);
 
 // main.c
 void	init(t_program *prg, char *map_name);
@@ -144,27 +186,39 @@ void	init(t_program *prg, char *map_name);
 	//	close.c
 	void	free_all(t_program *prg);
 	void	free_parsing(t_program *prg);
+	//	exec
+		// 3d_calculations.c
+		int		get_color(t_exec *exec, int ofset_y, float ofset_x);
+		void	draw_vertical_line(t_exec *exec, int x, float distance);
+		float	module(float x1, float y1, float x2, float y2, t_player *p);
+		float	calculate_distance(t_exec *exec, float angle);
+		void	tred_word(t_exec *exec);
+		// close.c
+		void	free_exec(t_exec *exec);
+		// draw.c
+		void	put_pixel(int x, int y, int color, t_exec *exec);
+		void	draw_square(float x, float y, int color, t_exec *exec);
+		int		draw_map(t_exec *exec);
+		int		touch_orient(t_exec *exec, int x_prev, int y_prev);
+		int		touch(float x, float y, char **map);
+		void	draw_line(t_exec *exec, float x, float y, float angle);
+		int		draw_player(t_exec *exec, int v);
+		void	draw_bg(t_exec *exec, int color_f, int color_c);
+		void	draw_texture(t_exec *exec);
+		int		draw_loop(t_exec *exec);
+		// exec.c
+		int		exec(t_program *prg);
+		void	init_exec(t_exec *exec);
+		void	init_texture(t_program *prg);
 
-//	graphic
-	//	color_bg.c
-	void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
-	int	color_bg(t_program *prg);	
-	//	graphic.c
-	int	graphic(t_program *prg);
-	//	minimap.c
-	void	mini_map(t_program *prg);
-	void	print_images(t_program *prg);
-	void	find_player(t_program *prg, int *x, int *y);
-	void	full_fill_black(t_program *prg);
-	//create_images.c
-	int	create_images(t_program *prg);
-
-
-//	hooks.c
-int	mouse_controls(t_program *prg);
-int	key_controls(int keysim, t_program *prg);
-
-
-
-
+		char	**get_map(void);
+		void	init_player(t_exec *exec);
+		void	find_player(char **map, float *x, float *y);
+		// hooks.c
+		int		mouse_controls(t_exec *exec);
+		int		key_controls(int keysim, t_exec *exec);
+		int 	key_release(int keycode, t_exec *exec);
+		// movements
+		void	rotation(t_player *p);
+		void	movement(t_player *p, char **map);
 #endif

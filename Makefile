@@ -7,7 +7,7 @@ UTILS = utils/utils.a
 UTILS_DIR = utils/
 
 CC = cc
-CFLAGS = -Wall -Werror -Wextra -g 
+CFLAGS = -Wall -Werror -Wextra -lm -g -O3
 LIBX_FLAGS = -Lminilibx-linux -lmlx -lXext -lX11 -Lutils
 
 SRC = main.c \
@@ -18,15 +18,13 @@ SRC = main.c \
 	parsing/check_map_2.c \
 	parsing/check_map_3.c \
 	parsing/check_textures.c \
-	exec/exec.c \
 	matrix_utils.c \
 	close.c \
-	hooks.c \
-	graphic/color_bg.c \
-	graphic/graphic.c \
-	graphic/mini_map.c \
-	graphic/create_images.c 
-
+	exec/exec.c \
+	exec/hooks.c \
+	exec/draw.c \
+	exec/movements.c \
+	exec/3d_calculations.c
 all: $(NAME)
 
 $(PRINTF):
