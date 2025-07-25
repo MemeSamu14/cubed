@@ -6,7 +6,7 @@
 /*   By: sfiorini <sfiorini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/15 10:42:12 by sfiorini          #+#    #+#             */
-/*   Updated: 2025/07/23 12:46:08 by sfiorini         ###   ########.fr       */
+/*   Updated: 2025/07/25 10:50:32 by sfiorini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,21 +69,18 @@ char	**get_map(void)
 void	init_texture(t_exec *exec)
 {
 	char	*path_img = "wall.xpm";
-	int		height = 800;
-	int		width = 800;
+	int		height = BLOCK;
+	int		width = BLOCK;
 
 	exec->t.img_n = mlx_xpm_file_to_image(exec->mlx, path_img, &width, &height);
-	if (exec->t.img_n == NULL)
-		printf("culo");
-	exec->t.xpm_n = mlx_get_data_addr(exec->t.img_n, &exec->bpp, &exec->size_line, &exec->endian);
-	
+	// if (exec->t.img_n == NULL)
+	// 	// printf("culo");
+	exec->t.xpm_n = mlx_get_data_addr(exec->t.img_n, &exec->t.bpp, &exec->t.size_line, &exec->t.endian);
 
-	
-	printf("bpp: %d\n", exec->bpp);
-	printf("endian: %d\n", exec->endian);
-	printf("size line: %d\n", exec->size_line);
+	printf("bpp: %d\n", exec->t.bpp);
+	printf("size line: %d\n", exec->t.size_line);
 	// 216 71 21
-	printf("r: %d, g: %d, b: %d, t: %d\n", exec->t.xpm_n[2], exec->t.xpm_n[1], exec->t.xpm_n[0], exec->t.xpm_n[3]);
+	// printf("r: %d, g: %d, b: %d, t: %d\n", exec->t.xpm_n[2], exec->t.xpm_n[1], exec->t.xpm_n[0], exec->t.xpm_n[3]);
 }
 
 

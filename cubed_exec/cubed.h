@@ -6,7 +6,7 @@
 /*   By: sfiorini <sfiorini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 10:45:23 by sfiorini          #+#    #+#             */
-/*   Updated: 2025/07/23 10:31:02 by sfiorini         ###   ########.fr       */
+/*   Updated: 2025/07/25 11:32:48 by sfiorini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,13 @@ enum	e_controls {
 	ERROR = 4
 };
 
+enum	e_orient {
+	NORD = 0,
+	SUD = 1,
+	EST = 2,
+	OVEST = 3,
+};
+
 typedef struct s_player
 {
 	float	x;
@@ -57,7 +64,10 @@ typedef struct s_player
 typedef struct s_texture
 {
 	void	*img_n;
-	char	*xpm_n;	
+	char	*xpm_n;
+	int		bpp;
+	int		size_line;
+	int		endian;
 }	t_texture;
 
 typedef struct s_exec
@@ -68,12 +78,12 @@ typedef struct s_exec
 	void	*win;
 	void	*img;
 
-	char *data;
-	int bpp;
-	int size_line;
-	int endian;
+	char	*data;
+	int		bpp;
+	int		size_line;
+	int		endian;
 	t_texture	t;
-	t_player p;
+	t_player	p;
 }	t_exec;
 
 
@@ -95,6 +105,7 @@ char	**matrix_dup(char **old_mtx);
 void	movement(t_player *p, char **map);
 void	rotation(t_player *movement);
 float	calculate_distance(t_exec *exec, float angle);
+int	touch_orient(float x, float y, char **map, int x_prev, int y_prev, int *orientation);
 int		touch(float x, float y, char **map);
 void	draw_vertical_line(t_exec *exec, int x, float distance);
 void	put_pixel(int x, int y, int color, t_exec *exec);

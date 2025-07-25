@@ -6,7 +6,7 @@
 /*   By: sfiorini <sfiorini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/15 11:24:41 by sfiorini          #+#    #+#             */
-/*   Updated: 2025/07/23 12:57:15 by sfiorini         ###   ########.fr       */
+/*   Updated: 2025/07/25 11:44:48 by sfiorini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,21 @@ int	draw_map(t_exec *exec)
 		i++;
 	}
 	return (0);
+}
+
+int	touch_orient(float x, float y, char **map, int x_prev, int y_prev, int *orientation)
+{
+	if (x < x_prev)
+		*orientation = OVEST;
+	if (x > x_prev)
+		*orientation = EST;
+	if (y < y_prev)
+		*orientation = NORD;
+	if (y > y_prev)
+		*orientation = SUD;
+	if (map[(int)x][(int)y] == '1')
+		return (TRUE);
+	return (FALSE);
 }
 
 int	touch(float x, float y, char **map)
@@ -138,15 +153,15 @@ void	draw_texture(t_exec *exec)
 	int		x;
 	int		y;
 	int		index;
-	// char	**color;
-	int		num = 0;
+	int		num;
 
+	num = 0;
 	x = 0;
 	index = 0;
-	while (x < 720)
+	while (x < BLOCK)
 	{
 		y = 0;
-		while (y < 720)
+		while (y < BLOCK)
 		{
 			num = ((exec->t.xpm_n[index + 2] & 0xFF) << 16) | \
 			((exec->t.xpm_n[index + 1] & 0xFF) << 8) | \
@@ -162,13 +177,13 @@ void	draw_texture(t_exec *exec)
 
 int	draw_loop(t_exec *exec)
 {
-	// draw_bg(exec, 0x008F39, 0xA2CADF);
-	// movement(&exec->p, exec->map);
-	// rotation(&exec->p);
-	// tred_word(exec);
-	draw_texture(exec);
-	// draw_map(exec);
-	// draw_player(exec, TRUE);
+	draw_bg(exec, 0x008F39, 0xA2CADF);
+	movement(&exec->p, exec->map);
+	rotation(&exec->p);
+	tred_word(exec);
+	// draw_texture(exec);
+	draw_map(exec);
+	draw_player(exec, TRUE);
     mlx_put_image_to_window(exec->mlx, exec->win, exec->img, 0, 0);
 	return (0);
 }
