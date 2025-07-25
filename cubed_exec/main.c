@@ -6,7 +6,7 @@
 /*   By: sfiorini <sfiorini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/15 10:42:12 by sfiorini          #+#    #+#             */
-/*   Updated: 2025/07/25 10:50:32 by sfiorini         ###   ########.fr       */
+/*   Updated: 2025/07/25 16:57:46 by sfiorini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,19 +68,23 @@ char	**get_map(void)
 
 void	init_texture(t_exec *exec)
 {
-	char	*path_img = "wall.xpm";
+	char	*path_img_n = "wall_nord.xpm";
+	char	*path_img_s = "wall_sud.xpm";
+	char	*path_img_o = "wall_ovest.xpm";
+	char	*path_img_e = "wall_est.xpm";
 	int		height = BLOCK;
 	int		width = BLOCK;
 
-	exec->t.img_n = mlx_xpm_file_to_image(exec->mlx, path_img, &width, &height);
-	// if (exec->t.img_n == NULL)
-	// 	// printf("culo");
-	exec->t.xpm_n = mlx_get_data_addr(exec->t.img_n, &exec->t.bpp, &exec->t.size_line, &exec->t.endian);
+	exec->t.img_n = mlx_xpm_file_to_image(exec->mlx, path_img_n, &width, &height);
+	exec->t.img_s = mlx_xpm_file_to_image(exec->mlx, path_img_s, &width, &height);
+	exec->t.img_e = mlx_xpm_file_to_image(exec->mlx, path_img_e, &width, &height);
+	exec->t.img_o = mlx_xpm_file_to_image(exec->mlx, path_img_o, &width, &height);
 
-	printf("bpp: %d\n", exec->t.bpp);
-	printf("size line: %d\n", exec->t.size_line);
-	// 216 71 21
-	// printf("r: %d, g: %d, b: %d, t: %d\n", exec->t.xpm_n[2], exec->t.xpm_n[1], exec->t.xpm_n[0], exec->t.xpm_n[3]);
+	exec->t.xpm_n = mlx_get_data_addr(exec->t.img_n, &exec->t.bpp, &exec->t.size_line, &exec->t.endian);
+	exec->t.xpm_s = mlx_get_data_addr(exec->t.img_s, &exec->t.bpp, &exec->t.size_line, &exec->t.endian);
+	exec->t.xpm_e = mlx_get_data_addr(exec->t.img_e, &exec->t.bpp, &exec->t.size_line, &exec->t.endian);
+	exec->t.xpm_o = mlx_get_data_addr(exec->t.img_o, &exec->t.bpp, &exec->t.size_line, &exec->t.endian);
+	// controlliamo nel parsing in caso
 }
 
 
@@ -92,6 +96,8 @@ void	init(t_exec *exec)
 	exec->win = mlx_new_window(exec->mlx, WIDTH, HEIGHT, "Cubed");
 	exec->img = mlx_new_image(exec->mlx, WIDTH, HEIGHT);
 	init_texture(exec);
+	exec->view_x = 0;
+	exec->view_y = 0;
 	exec->data = mlx_get_data_addr(exec->img, &exec->bpp, &exec->size_line, &exec->endian);
 }
 

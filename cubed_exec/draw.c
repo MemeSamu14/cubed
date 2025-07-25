@@ -6,7 +6,7 @@
 /*   By: sfiorini <sfiorini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/15 11:24:41 by sfiorini          #+#    #+#             */
-/*   Updated: 2025/07/25 11:44:48 by sfiorini         ###   ########.fr       */
+/*   Updated: 2025/07/25 16:37:55 by sfiorini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,17 +64,17 @@ int	draw_map(t_exec *exec)
 	return (0);
 }
 
-int	touch_orient(float x, float y, char **map, int x_prev, int y_prev, int *orientation)
+int	touch_orient(t_exec *exec, int x_prev, int y_prev)
 {
-	if (x < x_prev)
-		*orientation = OVEST;
-	if (x > x_prev)
-		*orientation = EST;
-	if (y < y_prev)
-		*orientation = NORD;
-	if (y > y_prev)
-		*orientation = SUD;
-	if (map[(int)x][(int)y] == '1')
+	if ((int)exec->view_x < x_prev)
+		exec->orientation = OVEST;
+	if ((int)exec->view_x > x_prev)
+		exec->orientation = EST;
+	if ((int)exec->view_y < y_prev)
+		exec->orientation = NORD;
+	if ((int)exec->view_y > y_prev)
+		exec->orientation = SUD;
+	if (exec->map[(int)exec->view_x][(int)exec->view_y] == '1')
 		return (TRUE);
 	return (FALSE);
 }
@@ -131,14 +131,16 @@ void	draw_bg(t_exec *exec, int color_f, int color_c)
 {
 	int	i;
 	int	j;
+	int	middle;
 
 	i = 0;
+	middle = (HEIGHT / 2);
 	while (i < HEIGHT)
 	{
 		j = 0;
 		while (j < WIDTH)
 		{
-			if (i < 540)
+			if (i < middle)
 				put_pixel(j, i, color_c, exec);
 			else
 				put_pixel(j, i, color_f, exec);
@@ -181,7 +183,7 @@ int	draw_loop(t_exec *exec)
 	movement(&exec->p, exec->map);
 	rotation(&exec->p);
 	tred_word(exec);
-	// draw_texture(exec);
+	draw_texture(exec);
 	draw_map(exec);
 	draw_player(exec, TRUE);
     mlx_put_image_to_window(exec->mlx, exec->win, exec->img, 0, 0);
