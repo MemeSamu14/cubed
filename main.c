@@ -6,12 +6,11 @@
 /*   By: sfiorini <sfiorini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 10:49:19 by sfiorini          #+#    #+#             */
-/*   Updated: 2025/07/26 10:02:38 by sfiorini         ###   ########.fr       */
+/*   Updated: 2025/07/26 11:28:34 by sfiorini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cubed.h"
-
 
 int	main(int ac, char **av)
 {
