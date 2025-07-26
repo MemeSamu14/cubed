@@ -6,7 +6,7 @@
 /*   By: sfiorini <sfiorini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/15 11:24:41 by sfiorini          #+#    #+#             */
-/*   Updated: 2025/07/25 18:28:21 by sfiorini         ###   ########.fr       */
+/*   Updated: 2025/07/26 10:36:43 by sfiorini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,12 +154,12 @@ void	draw_bg(t_exec *exec, int color_f, int color_c)
 
 int	draw_loop(t_exec *exec)
 {
-	draw_bg(exec, 0x008F39, 0xA2CADF);
+	draw_bg(exec, exec->color_f, exec->color_c);
 	movement(&exec->p, exec->map);
 	rotation(&exec->p);
 	tred_word(exec);
-	// draw_map(exec);
-	// draw_player(exec, TRUE);
+	draw_map(exec);
+	draw_player(exec, TRUE);
     mlx_put_image_to_window(exec->mlx, exec->win, exec->img, 0, 0);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: sfiorini <sfiorini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 10:57:34 by sfiorini          #+#    #+#             */
-/*   Updated: 2025/06/25 15:35:37 by sfiorini         ###   ########.fr       */
+/*   Updated: 2025/07/26 09:57:05 by sfiorini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ int	parsing(t_program *prg)
 		return (ERROR);
 	}
 	change_player_id(prg);
-	print_matrix(prg->map);
 	return (0);
 }
 

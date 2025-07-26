@@ -6,7 +6,7 @@
 /*   By: sfiorini <sfiorini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 10:49:19 by sfiorini          #+#    #+#             */
-/*   Updated: 2025/07/25 18:24:24 by sfiorini         ###   ########.fr       */
+/*   Updated: 2025/07/26 10:02:38 by sfiorini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ int	main(int ac, char **av)
 	if (exec(&prg) == ERROR)
 		return (ERROR);
 	free_all(&prg);
-	
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: sfiorini <sfiorini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 18:20:22 by sfiorini          #+#    #+#             */
-/*   Updated: 2025/06/23 16:34:28 by sfiorini         ###   ########.fr       */
+/*   Updated: 2025/07/26 10:26:54 by sfiorini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,14 +58,14 @@ int	check_id(t_program *prg, char *buff)
 	int	flag;
 
 	flag = WRONG;
-	if (ft_strncmp(buff, "NO", 2) == 0)
+	if (ft_strncmp(buff, "EA", 2) == 0)
+		flag = set_id(prg, "EA", buff + 2);
+	else if (ft_strncmp(buff, "WE", 2) == 0)
+		flag = set_id(prg, "WE", buff + 2);
+	else if (ft_strncmp(buff, "NO", 2) == 0)
 		flag = set_id(prg, "NO", buff + 2);
 	else if (ft_strncmp(buff, "SO", 2) == 0)
 		flag = set_id(prg, "SO", buff + 2);
-	else if (ft_strncmp(buff, "WE", 2) == 0)
-		flag = set_id(prg, "WE", buff + 2);
-	else if (ft_strncmp(buff, "EA", 2) == 0)
-		flag = set_id(prg, "EA", buff + 2);
 	else if (ft_strncmp(buff, "F", 1) == 0)
 		set_id_num(prg, "F", buff + 1);
 	else if (ft_strncmp(buff, "C", 1) == 0)
@@ -84,13 +84,13 @@ int	set_id(t_program *prg, char *id, char *buff)
 		i++;
 	if (ft_strncmp(buff + i, "./", 2) == 0)
 	{
-		if (ft_strncmp(id, "NO", 2) == 0)
-			prg->no = ft_substr(buff, i + 2, (ft_strlen(buff) - 3 - i));
-		if (ft_strncmp(id, "SO", 2) == 0)
-			prg->so = ft_substr(buff, i + 2, (ft_strlen(buff) - 3 - i));
-		if (ft_strncmp(id, "WE", 2) == 0)
-			prg->we = ft_substr(buff, i + 2, (ft_strlen(buff) - 3 - i));
 		if (ft_strncmp(id, "EA", 2) == 0)
+			prg->no = ft_substr(buff, i + 2, (ft_strlen(buff) - 3 - i));
+		if (ft_strncmp(id, "WE", 2) == 0)
+			prg->so = ft_substr(buff, i + 2, (ft_strlen(buff) - 3 - i));
+		if (ft_strncmp(id, "NO", 2) == 0)
+			prg->we = ft_substr(buff, i + 2, (ft_strlen(buff) - 3 - i));
+		if (ft_strncmp(id, "SO", 2) == 0)
 			prg->ea = ft_substr(buff, i + 2, (ft_strlen(buff) - 3 - i));
 		return (CORRECT);
 	}

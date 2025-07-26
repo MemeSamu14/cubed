@@ -6,7 +6,7 @@
 /*   By: sfiorini <sfiorini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/15 10:42:12 by sfiorini          #+#    #+#             */
-/*   Updated: 2025/07/25 18:36:40 by sfiorini         ###   ########.fr       */
+/*   Updated: 2025/07/26 10:55:27 by sfiorini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,10 @@
 
 int	exec(t_program *prg)
 {
-	prg->exec.map = matrix_dup(prg->map);
-	init_exec(&prg->exec);
-	mlx_hook(prg->exec.win, 2, 1L << 0, key_controls, &prg->exec);
+	init_exec(prg);
+	mlx_hook(prg->exec.win, 2, 1L << 0, key_controls, prg);
 	mlx_hook(prg->exec.win, 3, 1L << 1, key_release, &prg->exec);
-	mlx_hook(prg->exec.win, 17, 1L << 3, mouse_controls, &prg->exec);
+	mlx_hook(prg->exec.win, 17, 1L << 3, mouse_controls, prg);
 	init_texture(prg);
 	mlx_loop_hook(prg->exec.mlx, draw_loop, &prg->exec);
 	mlx_loop(prg->exec.mlx);
@@ -49,39 +48,24 @@ void	find_player(char **map, float *x, float *y)
 	return ;
 }
 
-void	init_player(t_exec *exec)
+void	init_player(t_program *prg)
 {
-	find_player(exec->map, &exec->p.x, &exec->p.y);
-	exec->p.angle = PI / 2;
-	exec->p.move_up = FALSE;
-	exec->p.move_right = FALSE;
-	exec->p.move_down = FALSE;
-	exec->p.move_left = FALSE;
-	exec->p.rotate_left = FALSE;
-	exec->p.rotate_right = FALSE;
+	find_player(prg->exec.map, &prg->exec.p.x, &prg->exec.p.y);
+	if (prg->orientation == 'E')
+		prg->exec.p.angle = PI / 2;
+	else if (prg->orientation == 'W')
+		prg->exec.p.angle = 3 * PI / 2;
+	else if (prg->orientation == 'S')
+		prg->exec.p.angle = PI;
+	else if (prg->orientation == 'N')
+		prg->exec.p.angle = 0;
+	prg->exec.p.move_up = FALSE;
+	prg->exec.p.move_right = FALSE;
+	prg->exec.p.move_down = FALSE;
+	prg->exec.p.move_left = FALSE;
+	prg->exec.p.rotate_left = FALSE;
+	prg->exec.p.rotate_right = FALSE;
 }
-
-/* char	**get_map(void)
-{
-    char **map = malloc(sizeof(char *) * 15);
-    map[0] = "1111111111111111111111111";
-    map[1] = "10000000000110000000000001";
-    map[2] = "1011000001110000P00000001";
-    map[3] = "100100000000000000000000111111111";
-    map[4] = "101111111011000001110000000000001";
-    map[5] = "100000000011000001110111111111111";
-    map[6] = "10110111111111011100000010001";
-    map[7] = "10110111111111011101010010001";
-    map[8] = "10000000110101011100000010001";
-    map[9] = "10000000000000001100000010001111111111";
-    map[10] = "10000000000000000000000000000000000001";
-    map[11] = "1000000111010101111101111000111111111111";
-    map[12] = "10110111 1110101 101111010001";
-    map[13] = "11111111 1111111 111111111111";
-    map[14] = NULL;
-    return (map);
-} */
-
 
 void	init_texture(t_program *prg)
 {
@@ -111,16 +95,37 @@ void	init_texture(t_program *prg)
 	prg->exec.t.xpm_o = mlx_get_data_addr(prg->exec.t.img_o, &prg->exec.t.bpp, &prg->exec.t.size_line, &prg->exec.t.endian);
 }
 
-
-void	init_exec(t_exec *exec)
+void	init_color(t_program *prg)
 {
-	init_player(exec);
-	exec->mlx = mlx_init();
-	exec->win = mlx_new_window(exec->mlx, WIDTH, HEIGHT, "Cubed");
-	exec->img = mlx_new_image(exec->mlx, WIDTH, HEIGHT);
-	exec->view_x = 0;
-	exec->view_y = 0;
-	exec->data = mlx_get_data_addr(exec->img, &exec->bpp, &exec->size_line, &exec->endian);
+	int	red;
+	int	green;
+	int	blue;
+
+	red = ft_atoi(prg->code_c[0]);
+	green = ft_atoi(prg->code_c[1]);
+	blue = ft_atoi(prg->code_c[2]);
+	prg->exec.color_c = ((red & 0xFF) << 16) \
+	| ((green & 0xFF) << 8) | (blue & 0xFF);
+
+	red = ft_atoi(prg->code_f[0]);
+	green = ft_atoi(prg->code_f[1]);
+	blue = ft_atoi(prg->code_f[2]);
+	prg->exec.color_f = ((red & 0xFF) << 16) \
+	| ((green & 0xFF) << 8) | (blue & 0xFF);
+}
+
+
+void	init_exec(t_program *prg)
+{
+	prg->exec.map = prg->map;
+	init_color(prg);
+	init_player(prg);
+	prg->exec.mlx = mlx_init();
+	prg->exec.win = mlx_new_window(prg->exec.mlx, WIDTH, HEIGHT, "Cubed");
+	prg->exec.img = mlx_new_image(prg->exec.mlx, WIDTH, HEIGHT);
+	prg->exec.view_x = 0;
+	prg->exec.view_y = 0;
+	prg->exec.data = mlx_get_data_addr(prg->exec.img, &prg->exec.bpp, &prg->exec.size_line, &prg->exec.endian);
 }
 
 

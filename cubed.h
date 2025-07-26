@@ -6,7 +6,7 @@
 /*   By: sfiorini <sfiorini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 10:45:23 by sfiorini          #+#    #+#             */
-/*   Updated: 2025/07/25 18:24:42 by sfiorini         ###   ########.fr       */
+/*   Updated: 2025/07/26 10:29:58 by sfiorini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@
 #define HEIGHT 1080
 #define BLOCK 32
 #define PI 3.1415926535
-#define SPEED 0.2
-#define ANGLE_SPEED 0.1
+#define SPEED 0.05
+#define ANGLE_SPEED 0.05
 
 enum	e_controls {
 	FALSE = 0,
@@ -51,9 +51,6 @@ typedef struct	s_variables {
 	int		i;
 	int		j;
 }	t_variables;
-
-
-
 
 typedef struct s_player
 {
@@ -100,6 +97,8 @@ typedef struct s_exec
 	float	view_x;
 	float	view_y;
 	int		orientation;
+	int		color_c;
+	int		color_f;
 	t_texture	t;
 	t_player	p;
 }	t_exec;
@@ -204,19 +203,17 @@ void	init(t_program *prg, char *map_name);
 		void	draw_line(t_exec *exec, float x, float y, float angle);
 		int		draw_player(t_exec *exec, int v);
 		void	draw_bg(t_exec *exec, int color_f, int color_c);
-		void	draw_texture(t_exec *exec);
 		int		draw_loop(t_exec *exec);
 		// exec.c
 		int		exec(t_program *prg);
-		void	init_exec(t_exec *exec);
+		void	init_exec(t_program *prg);
 		void	init_texture(t_program *prg);
 
-		char	**get_map(void);
-		void	init_player(t_exec *exec);
+		void	init_player(t_program *prg);
 		void	find_player(char **map, float *x, float *y);
 		// hooks.c
-		int		mouse_controls(t_exec *exec);
-		int		key_controls(int keysim, t_exec *exec);
+		int		mouse_controls(t_program *prg);
+		int		key_controls(int keysim, t_program *prg);
 		int 	key_release(int keycode, t_exec *exec);
 		// movements
 		void	rotation(t_player *p);
