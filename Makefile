@@ -1,8 +1,5 @@
 NAME = cubed
 
-MLX = `libmlx-Linux.a
-MLX_DIR = minilibx-linux/
-
 UTILS = utils/utils.a
 UTILS_DIR = utils/
 
@@ -25,6 +22,7 @@ SRC = main.c \
 	exec/draw.c \
 	exec/movements.c \
 	exec/3d_calculations.c
+
 all: $(NAME)
 
 $(PRINTF):
@@ -33,12 +31,13 @@ $(PRINTF):
 $(UTILS):
 	$(MAKE) -C $(UTILS_DIR)
 
-$(MLX):
-	@$(MAKE) -C $(MLX_DIR)
-
 $(NAME): $(MLX) $(PRINTF) $(UTILS)
-	$(CC) $(CFLAGS)  $(SRC) $(UTILS) $(LIBX_FLAGS) -g -o $(NAME)
+	$(CC) $(CFLAGS) $(SRC) $(UTILS) $(LIBX_FLAGS) -g -o $(NAME)
 
+
+mlx:
+	git clone https://github.com/42Paris/minilibx-linux.git ./minilibx-linux
+	make -C ./minilibx-linux
 
 clean:
 	rm -f
