@@ -6,13 +6,13 @@
 /*   By: sfiorini <sfiorini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 11:37:58 by sfiorini          #+#    #+#             */
-/*   Updated: 2025/07/25 18:25:59 by sfiorini         ###   ########.fr       */
+/*   Updated: 2025/07/27 16:42:27 by sfiorini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cubed.h"
 
-int	get_color(t_exec *exec, int ofset_y, float ofset_x)
+int	get_color(t_exec *exec, int ofset_y, float ofset_x, int status)
 {
 	int	red;
 	int	green;
@@ -24,21 +24,28 @@ int	get_color(t_exec *exec, int ofset_y, float ofset_x)
 		ofset_x = BLOCK - ((ofset_x * BLOCK) / 100);
 	else
 		ofset_x = ((ofset_x * BLOCK) / 100);
-	if (exec->orientation == NORD)
-		img_data = exec->t.xpm_n;
-	else if (exec->orientation == EST)
+	if (exec->orientation == EST)
 		img_data = exec->t.xpm_e;
 	else if (exec->orientation == SUD)
 		img_data = exec->t.xpm_s;
+	else if (exec->orientation == NORD)
+		img_data = exec->t.xpm_n;
 	else if (exec->orientation == OVEST)
-		img_data = exec->t.xpm_o;
+	{
+		if (status >= 0 && status <= 9)
+			img_data = exec->t.xpm_o;
+		else if (status >= 10 && status <= 19)
+			img_data = exec->t.xpm_o1;
+		else
+			img_data = exec->t.xpm_o2;
+	}
 	red = img_data[(ofset_y * exec->t.size_line) + (((int)ofset_x * exec->t.bpp) / 8) + 2];
 	green = img_data[(ofset_y * exec->t.size_line) + (((int)ofset_x * exec->t.bpp) / 8) + 1];
 	blue = img_data[(ofset_y * exec->t.size_line) + (((int)ofset_x * exec->t.bpp) / 8) + 0];
 	return (((red & 0xFF) << 16) | ((green & 0xFF) << 8) | (blue & 0xFF));
 }
 
-void	draw_vertical_line(t_exec *exec, int x, float distance)
+void	draw_vertical_line(t_exec *exec, int x, float distance, int status)
 {
 	int		y;
 	float	height;
@@ -57,9 +64,9 @@ void	draw_vertical_line(t_exec *exec, int x, float distance)
 	{
 		y_pixel += ofset_y;
 		if (exec->orientation == EST || exec->orientation == OVEST)
-			put_pixel(x, y, get_color(exec, y_pixel, exec->view_y), exec);
+			put_pixel(x, y, get_color(exec, y_pixel, exec->view_y, status), exec);
 		if (exec->orientation == NORD || exec->orientation == SUD)
-			put_pixel(x, y, get_color(exec, y_pixel, exec->view_x), exec);
+			put_pixel(x, y, get_color(exec, y_pixel, exec->view_x, status), exec);
 		y++;
 	}
 }
@@ -101,7 +108,7 @@ float	calculate_distance(t_exec *exec, float angle)
 	return (distance);
 }
 
-void	tred_word(t_exec *exec)
+void	tred_word(t_exec *exec, int status)
 {
 	float	start;
 	float	end;
@@ -112,7 +119,7 @@ void	tred_word(t_exec *exec)
 	end = exec->p.angle + (PI / 6);
 	while (start < end)
 	{
-		draw_vertical_line(exec, i, calculate_distance(exec, start));
+		draw_vertical_line(exec, i, calculate_distance(exec, start), status);
 		start += PI / WIDTH / 3;
 		i++;
 	}

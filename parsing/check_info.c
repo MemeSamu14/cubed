@@ -6,7 +6,7 @@
 /*   By: sfiorini <sfiorini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 18:20:22 by sfiorini          #+#    #+#             */
-/*   Updated: 2025/07/26 10:26:54 by sfiorini         ###   ########.fr       */
+/*   Updated: 2025/07/27 16:42:03 by sfiorini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,13 +85,13 @@ int	set_id(t_program *prg, char *id, char *buff)
 	if (ft_strncmp(buff + i, "./", 2) == 0)
 	{
 		if (ft_strncmp(id, "EA", 2) == 0)
-			prg->no = ft_substr(buff, i + 2, (ft_strlen(buff) - 3 - i));
-		if (ft_strncmp(id, "WE", 2) == 0)
-			prg->so = ft_substr(buff, i + 2, (ft_strlen(buff) - 3 - i));
-		if (ft_strncmp(id, "NO", 2) == 0)
-			prg->we = ft_substr(buff, i + 2, (ft_strlen(buff) - 3 - i));
-		if (ft_strncmp(id, "SO", 2) == 0)
 			prg->ea = ft_substr(buff, i + 2, (ft_strlen(buff) - 3 - i));
+		if (ft_strncmp(id, "WE", 2) == 0)
+			prg->we = ft_substr(buff, i + 2, (ft_strlen(buff) - 3 - i));
+		if (ft_strncmp(id, "NO", 2) == 0)
+			prg->no = ft_substr(buff, i + 2, (ft_strlen(buff) - 3 - i));
+		if (ft_strncmp(id, "SO", 2) == 0)
+			prg->so = ft_substr(buff, i + 2, (ft_strlen(buff) - 3 - i));
 		return (CORRECT);
 	}
 	return (ERROR);

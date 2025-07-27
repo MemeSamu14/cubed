@@ -6,7 +6,7 @@
 /*   By: sfiorini <sfiorini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/15 10:42:12 by sfiorini          #+#    #+#             */
-/*   Updated: 2025/07/26 10:55:27 by sfiorini         ###   ########.fr       */
+/*   Updated: 2025/07/27 16:44:24 by sfiorini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,13 @@ void	init_player(t_program *prg)
 {
 	find_player(prg->exec.map, &prg->exec.p.x, &prg->exec.p.y);
 	if (prg->orientation == 'E')
-		prg->exec.p.angle = PI / 2;
-	else if (prg->orientation == 'W')
-		prg->exec.p.angle = 3 * PI / 2;
-	else if (prg->orientation == 'S')
-		prg->exec.p.angle = PI;
-	else if (prg->orientation == 'N')
 		prg->exec.p.angle = 0;
+	else if (prg->orientation == 'W')
+		prg->exec.p.angle = PI;
+	else if (prg->orientation == 'S')
+		prg->exec.p.angle = 3 * PI / 2;
+	else if (prg->orientation == 'N')
+		prg->exec.p.angle = PI / 2;
 	prg->exec.p.move_up = FALSE;
 	prg->exec.p.move_right = FALSE;
 	prg->exec.p.move_down = FALSE;
@@ -85,14 +85,20 @@ void	init_texture(t_program *prg)
 	tmp = prg->we;
 	prg->we = ft_strjoin("texture/", tmp);
 	free(tmp);
+	// printf("wesr: %s\n", prg->we);
+	// printf("wesr: %s\n", prg->we);
 	prg->exec.t.img_n = mlx_xpm_file_to_image(prg->exec.mlx, prg->no, &width, &height);
 	prg->exec.t.img_s = mlx_xpm_file_to_image(prg->exec.mlx, prg->so, &width, &height);
 	prg->exec.t.img_e = mlx_xpm_file_to_image(prg->exec.mlx, prg->ea, &width, &height);
 	prg->exec.t.img_o = mlx_xpm_file_to_image(prg->exec.mlx, prg->we, &width, &height);
+	prg->exec.t.img_o1 = mlx_xpm_file_to_image(prg->exec.mlx, "texture/piccoletto1.xpm", &width, &height);
+	prg->exec.t.img_o2 = mlx_xpm_file_to_image(prg->exec.mlx, "texture/piccoletto2.xpm", &width, &height);
 	prg->exec.t.xpm_n = mlx_get_data_addr(prg->exec.t.img_n, &prg->exec.t.bpp, &prg->exec.t.size_line, &prg->exec.t.endian);
 	prg->exec.t.xpm_s = mlx_get_data_addr(prg->exec.t.img_s, &prg->exec.t.bpp, &prg->exec.t.size_line, &prg->exec.t.endian);
 	prg->exec.t.xpm_e = mlx_get_data_addr(prg->exec.t.img_e, &prg->exec.t.bpp, &prg->exec.t.size_line, &prg->exec.t.endian);
 	prg->exec.t.xpm_o = mlx_get_data_addr(prg->exec.t.img_o, &prg->exec.t.bpp, &prg->exec.t.size_line, &prg->exec.t.endian);
+	prg->exec.t.xpm_o1 = mlx_get_data_addr(prg->exec.t.img_o1, &prg->exec.t.bpp, &prg->exec.t.size_line, &prg->exec.t.endian);
+	prg->exec.t.xpm_o2 = mlx_get_data_addr(prg->exec.t.img_o2, &prg->exec.t.bpp, &prg->exec.t.size_line, &prg->exec.t.endian);
 }
 
 void	init_color(t_program *prg)

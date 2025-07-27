@@ -6,7 +6,7 @@
 /*   By: sfiorini <sfiorini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 10:45:23 by sfiorini          #+#    #+#             */
-/*   Updated: 2025/07/26 10:29:58 by sfiorini         ###   ########.fr       */
+/*   Updated: 2025/07/27 16:14:16 by sfiorini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 
 #define WIDTH 1920
 #define HEIGHT 1080
-#define BLOCK 32
+#define BLOCK 256
 #define PI 3.1415926535
 #define SPEED 0.05
 #define ANGLE_SPEED 0.05
@@ -77,7 +77,11 @@ typedef struct s_texture
 	void	*img_e;
 	char	*xpm_e;
 	void	*img_o;
+	void	*img_o1;
+	void	*img_o2;
 	char	*xpm_o;
+	char	*xpm_o1;
+	char	*xpm_o2;
 	int		bpp;
 	int		size_line;
 	int		endian;
@@ -99,6 +103,7 @@ typedef struct s_exec
 	int		orientation;
 	int		color_c;
 	int		color_f;
+	int		map_len;
 	t_texture	t;
 	t_player	p;
 }	t_exec;
@@ -187,11 +192,11 @@ void	init(t_program *prg, char *map_name);
 	void	free_parsing(t_program *prg);
 	//	exec
 		// 3d_calculations.c
-		int		get_color(t_exec *exec, int ofset_y, float ofset_x);
-		void	draw_vertical_line(t_exec *exec, int x, float distance);
+		int		get_color(t_exec *exec, int ofset_y, float ofset_x, int status);
+		void	draw_vertical_line(t_exec *exec, int x, float distance, int status);
 		float	module(float x1, float y1, float x2, float y2, t_player *p);
 		float	calculate_distance(t_exec *exec, float angle);
-		void	tred_word(t_exec *exec);
+		void	tred_word(t_exec *exec, int status);
 		// close.c
 		void	free_exec(t_exec *exec);
 		// draw.c
