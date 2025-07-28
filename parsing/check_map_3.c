@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_map_3.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sfiorini <sfiorini@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cazerini <cazerini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 16:08:14 by sfiorini          #+#    #+#             */
-/*   Updated: 2025/06/23 16:20:20 by sfiorini         ###   ########.fr       */
+/*   Updated: 2025/07/28 11:01:47 by cazerini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ int	is_valid_char(t_program *prg, int i, int j)
 		prg->map[i][j] != 'S' && \
 		prg->map[i][j] != 'W' && \
 		prg->map[i][j] != 'E' && \
+		prg->map[i][j] != 'D' && \
 		prg->map[i][j] != '\0')
 		return (FALSE);
 	return (TRUE);

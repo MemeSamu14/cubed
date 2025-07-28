@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   3d_calculations.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sfiorini <sfiorini@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cazerini <cazerini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 11:37:58 by sfiorini          #+#    #+#             */
-/*   Updated: 2025/07/27 16:42:27 by sfiorini         ###   ########.fr       */
+/*   Updated: 2025/07/28 11:52:36 by cazerini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,9 @@ int	get_color(t_exec *exec, int ofset_y, float ofset_x, int status)
 		ofset_x = BLOCK - ((ofset_x * BLOCK) / 100);
 	else
 		ofset_x = ((ofset_x * BLOCK) / 100);
-	if (exec->orientation == EST)
+	if (exec->map[(int)exec->view_x][(int)exec->view_y] == 'D')
+		img_data = exec->t.xpm_d;
+	else if (exec->orientation == EST)
 		img_data = exec->t.xpm_e;
 	else if (exec->orientation == SUD)
 		img_data = exec->t.xpm_s;
@@ -65,7 +67,7 @@ void	draw_vertical_line(t_exec *exec, int x, float distance, int status)
 		y_pixel += ofset_y;
 		if (exec->orientation == EST || exec->orientation == OVEST)
 			put_pixel(x, y, get_color(exec, y_pixel, exec->view_y, status), exec);
-		if (exec->orientation == NORD || exec->orientation == SUD)
+		else if (exec->orientation == NORD || exec->orientation == SUD)
 			put_pixel(x, y, get_color(exec, y_pixel, exec->view_x, status), exec);
 		y++;
 	}

@@ -3,21 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   movements.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sfiorini <sfiorini@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cazerini <cazerini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 11:06:05 by sfiorini          #+#    #+#             */
-/*   Updated: 2025/07/26 10:42:33 by sfiorini         ###   ########.fr       */
+/*   Updated: 2025/07/28 16:32:17 by cazerini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cubed.h"
+
+void	rotation_mouse(t_player *p)
+{
+	if (p->pos_x_mouse >= 1910)
+		p->angle += MOUSE_SENSIBILITY;
+	if (p->pos_x_mouse <= 10)
+		p->angle -= MOUSE_SENSIBILITY;
+}
 
 void	rotation(t_player *p)
 {
 	if (p->rotate_left == TRUE)
 		p->angle -= ANGLE_SPEED;
 	if (p->rotate_right == TRUE)
-        p->angle += ANGLE_SPEED;
+		p->angle += ANGLE_SPEED;
 	if (p->angle > 2 * PI)
 		p->angle = 0;
 	if (p->angle < 0)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cubed.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sfiorini <sfiorini@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cazerini <cazerini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 10:45:23 by sfiorini          #+#    #+#             */
-/*   Updated: 2025/07/27 16:14:16 by sfiorini         ###   ########.fr       */
+/*   Updated: 2025/07/28 17:57:05 by cazerini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@
 #define BLOCK 256
 #define PI 3.1415926535
 #define SPEED 0.05
-#define ANGLE_SPEED 0.05
+#define ANGLE_SPEED 0.025
+#define MOUSE_SENSIBILITY 0.05
 
 enum	e_controls {
 	FALSE = 0,
@@ -64,7 +65,7 @@ typedef struct s_player
 	int		move_right;
 	int		rotate_left;
 	int		rotate_right;
-	
+	int		pos_x_mouse;
 }	t_player;
 
 
@@ -82,6 +83,12 @@ typedef struct s_texture
 	char	*xpm_o;
 	char	*xpm_o1;
 	char	*xpm_o2;
+	void	*img_d;
+	char	*xpm_d;
+	void	*img_shotgun;
+	char	*xpm_shotgun;
+	void	*img_shoot;
+	char	*xpm_shoot;
 	int		bpp;
 	int		size_line;
 	int		endian;
@@ -104,6 +111,7 @@ typedef struct s_exec
 	int		color_c;
 	int		color_f;
 	int		map_len;
+	int		button;
 	t_texture	t;
 	t_player	p;
 }	t_exec;
@@ -209,6 +217,7 @@ void	init(t_program *prg, char *map_name);
 		int		draw_player(t_exec *exec, int v);
 		void	draw_bg(t_exec *exec, int color_f, int color_c);
 		int		draw_loop(t_exec *exec);
+		void	draw_animation(t_exec *exec);
 		// exec.c
 		int		exec(t_program *prg);
 		void	init_exec(t_program *prg);
@@ -223,4 +232,6 @@ void	init(t_program *prg, char *map_name);
 		// movements
 		void	rotation(t_player *p);
 		void	movement(t_player *p, char **map);
+		void	rotation_mouse(t_player *p);
+
 #endif

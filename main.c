@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sfiorini <sfiorini@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cazerini <cazerini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 10:49:19 by sfiorini          #+#    #+#             */
-/*   Updated: 2025/07/27 15:08:58 by sfiorini         ###   ########.fr       */
+/*   Updated: 2025/07/28 17:56:53 by cazerini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void	init(t_program *prg, char *map_name)
 	prg->ea = NULL;
 	prg->f = NULL;
 	prg->c = NULL;
+	prg->exec.button = 0;
 	prg->code_f = NULL;
 	prg->code_c = NULL;
 }

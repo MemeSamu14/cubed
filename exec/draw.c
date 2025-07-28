@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sfiorini <sfiorini@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cazerini <cazerini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/15 11:24:41 by sfiorini          #+#    #+#             */
-/*   Updated: 2025/07/27 16:23:12 by sfiorini         ###   ########.fr       */
+/*   Updated: 2025/07/28 18:12:41 by cazerini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,11 @@ int	draw_map(t_exec *exec)
 				draw_square((i * 32 / 4), (j * 32 / 4), 0xFFC0CB, exec);
 			else if (exec->map[i][j] == '0' || exec->map[i][j] == 'P')
 				draw_square((i * 32 / 4), (j * 32 / 4), 0x000000, exec);
+			else if (exec->map[i][j] == 'D')
+				draw_square((i * 32 / 4), (j * 32 / 4), 0x5C3317, exec);
+			else
+				draw_square((i * 32 / 4), (j * 32 / 4), 0x0000FF, exec);
+				
 			j++;
 		}
 		i++;
@@ -74,14 +79,14 @@ int	touch_orient(t_exec *exec, int x_prev, int y_prev)
 		exec->orientation = NORD;
 	if ((int)exec->view_y > y_prev)
 		exec->orientation = SUD;
-	if (exec->map[(int)exec->view_x][(int)exec->view_y] == '1')
+	if (exec->map[(int)exec->view_x][(int)exec->view_y] == '1' || exec->map[(int)exec->view_x][(int)exec->view_y] == 'D')
 		return (TRUE);
 	return (FALSE);
 }
 
 int	touch(float x, float y, char **map)
 {
-	if (map[(int)x][(int)y] == '1')
+	if (map[(int)x][(int)y] == '1' || map[(int)x][(int)y] == 'D')
 		return (TRUE);
 	return (FALSE);
 }
@@ -148,21 +153,85 @@ void	draw_bg(t_exec *exec, int color_f, int color_c)
 	}
 }
 
+void	draw_animation(t_exec *exec)
+{
+	int		x;
+	int		y;
+	int		index;
+	int		num;
 
+	num = 0;
+	x = 0;
+	index = 0;
+	while (x < 274)
+	{
+		y = 0;
+		while (y < 322)
+		{
+			num = ((exec->t.xpm_shoot[index + 2] & 0xFF) << 16) | \
+			((exec->t.xpm_shoot[index + 1] & 0xFF) << 8) | \
+			(exec->t.xpm_shoot[index + 0] & 0xFF);
+			if (num != 0x000000)
+				put_pixel(820 + y, (HEIGHT - 80 - 320) + x, num, exec);
+			y++;
+			index += 4;
+		}
+		x++;
+	}
+}
+
+void	draw_shotgun(t_exec *exec)
+{
+	int		x;
+	int		y;
+	int		index;
+	int		num;
+
+	num = 0;
+	x = 0;
+	index = 0;
+	while (x < 240)
+	{
+		y = 0;
+		while (y < 291)
+		{
+			num = ((exec->t.xpm_shotgun[index + 2] & 0xFF) << 16) | \
+			((exec->t.xpm_shotgun[index + 1] & 0xFF) << 8) | \
+			(exec->t.xpm_shotgun[index + 0] & 0xFF);
+			if (num != 0x000000)
+				put_pixel(900 + y, (HEIGHT - 80 - 240) + x, num, exec);
+			y++;
+			index += 4;
+		}
+		x++;
+	}
+}
 
 int	draw_loop(t_exec *exec)
 {
 	static int	i = 0;
+	static int	j = 15;
 
 	if (i == 300)
 		i = 0;
 	draw_bg(exec, exec->color_f, exec->color_c);
 	movement(&exec->p, exec->map);
 	rotation(&exec->p);
-	// printf("i: %d\n", i % 6);
+	rotation_mouse(&exec->p);
 	tred_word(exec, i % 30);
 	draw_map(exec);
 	draw_player(exec, TRUE);
+	if (exec->button == 1)
+	{
+		exec->button = 0;
+		j = 0;
+	}
+	if (j < 15)
+	{
+		draw_animation(exec);
+		j++;
+	}
+	draw_shotgun(exec);
 	mlx_put_image_to_window(exec->mlx, exec->win, exec->img, 0, 0);
 	i++;
 	return (0);

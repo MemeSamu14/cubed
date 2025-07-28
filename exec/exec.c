@@ -3,14 +3,46 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sfiorini <sfiorini@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cazerini <cazerini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/15 10:42:12 by sfiorini          #+#    #+#             */
-/*   Updated: 2025/07/27 16:44:24 by sfiorini         ###   ########.fr       */
+/*   Updated: 2025/07/28 17:55:30 by cazerini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cubed.h"
+
+int shoot(int button, int x, int y, t_program *prg)
+{
+	(void)x;
+	(void)y;
+	(void)prg;
+	if (button == 1)
+	{
+		prg->exec.button = 1;
+	}
+	return (0);
+}
+
+int	pointer(int x, int y, t_program *prg)
+{
+	(void)y;
+	if (prg->exec.p.pos_x_mouse == -1)
+		prg->exec.p.pos_x_mouse = x;
+	if (prg->exec.p.pos_x_mouse < x - 15)
+	{
+		if (x > 10)
+			prg->exec.p.angle += MOUSE_SENSIBILITY;
+		prg->exec.p.pos_x_mouse = x;
+	}
+	if (prg->exec.p.pos_x_mouse > x + 15)
+	{
+		if (x < 1910)
+			prg->exec.p.angle -= MOUSE_SENSIBILITY;
+		prg->exec.p.pos_x_mouse = x;
+	}	
+	return (0);
+}
 
 int	exec(t_program *prg)
 {
@@ -18,6 +50,8 @@ int	exec(t_program *prg)
 	mlx_hook(prg->exec.win, 2, 1L << 0, key_controls, prg);
 	mlx_hook(prg->exec.win, 3, 1L << 1, key_release, &prg->exec);
 	mlx_hook(prg->exec.win, 17, 1L << 3, mouse_controls, prg);
+	mlx_hook(prg->exec.win, 6, 1L << 6, pointer, prg);	
+	mlx_hook(prg->exec.win, 4, 1L << 2, shoot, prg);	
 	init_texture(prg);
 	mlx_loop_hook(prg->exec.mlx, draw_loop, &prg->exec);
 	mlx_loop(prg->exec.mlx);
@@ -65,6 +99,7 @@ void	init_player(t_program *prg)
 	prg->exec.p.move_left = FALSE;
 	prg->exec.p.rotate_left = FALSE;
 	prg->exec.p.rotate_right = FALSE;
+	prg->exec.p.pos_x_mouse = -1;
 }
 
 void	init_texture(t_program *prg)
@@ -85,20 +120,24 @@ void	init_texture(t_program *prg)
 	tmp = prg->we;
 	prg->we = ft_strjoin("texture/", tmp);
 	free(tmp);
-	// printf("wesr: %s\n", prg->we);
-	// printf("wesr: %s\n", prg->we);
 	prg->exec.t.img_n = mlx_xpm_file_to_image(prg->exec.mlx, prg->no, &width, &height);
 	prg->exec.t.img_s = mlx_xpm_file_to_image(prg->exec.mlx, prg->so, &width, &height);
 	prg->exec.t.img_e = mlx_xpm_file_to_image(prg->exec.mlx, prg->ea, &width, &height);
 	prg->exec.t.img_o = mlx_xpm_file_to_image(prg->exec.mlx, prg->we, &width, &height);
 	prg->exec.t.img_o1 = mlx_xpm_file_to_image(prg->exec.mlx, "texture/piccoletto1.xpm", &width, &height);
 	prg->exec.t.img_o2 = mlx_xpm_file_to_image(prg->exec.mlx, "texture/piccoletto2.xpm", &width, &height);
+	prg->exec.t.img_d = mlx_xpm_file_to_image(prg->exec.mlx, "texture/door.xpm", &width, &height);
+	prg->exec.t.img_shotgun = mlx_xpm_file_to_image(prg->exec.mlx, "texture/shotgun.xpm", &width, &height);
+	prg->exec.t.img_shoot = mlx_xpm_file_to_image(prg->exec.mlx, "texture/shoot.xpm", &width, &height);
+	prg->exec.t.xpm_shotgun = mlx_get_data_addr(prg->exec.t.img_shotgun, &prg->exec.t.bpp, &prg->exec.t.size_line, &prg->exec.t.endian);
+	prg->exec.t.xpm_shoot = mlx_get_data_addr(prg->exec.t.img_shoot, &prg->exec.t.bpp, &prg->exec.t.size_line, &prg->exec.t.endian);
 	prg->exec.t.xpm_n = mlx_get_data_addr(prg->exec.t.img_n, &prg->exec.t.bpp, &prg->exec.t.size_line, &prg->exec.t.endian);
 	prg->exec.t.xpm_s = mlx_get_data_addr(prg->exec.t.img_s, &prg->exec.t.bpp, &prg->exec.t.size_line, &prg->exec.t.endian);
 	prg->exec.t.xpm_e = mlx_get_data_addr(prg->exec.t.img_e, &prg->exec.t.bpp, &prg->exec.t.size_line, &prg->exec.t.endian);
 	prg->exec.t.xpm_o = mlx_get_data_addr(prg->exec.t.img_o, &prg->exec.t.bpp, &prg->exec.t.size_line, &prg->exec.t.endian);
 	prg->exec.t.xpm_o1 = mlx_get_data_addr(prg->exec.t.img_o1, &prg->exec.t.bpp, &prg->exec.t.size_line, &prg->exec.t.endian);
 	prg->exec.t.xpm_o2 = mlx_get_data_addr(prg->exec.t.img_o2, &prg->exec.t.bpp, &prg->exec.t.size_line, &prg->exec.t.endian);
+	prg->exec.t.xpm_d = mlx_get_data_addr(prg->exec.t.img_d, &prg->exec.t.bpp, &prg->exec.t.size_line, &prg->exec.t.endian);
 }
 
 void	init_color(t_program *prg)
