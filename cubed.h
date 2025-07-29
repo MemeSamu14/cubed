@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cubed.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cazerini <cazerini@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sfiorini <sfiorini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 10:45:23 by sfiorini          #+#    #+#             */
-/*   Updated: 2025/07/28 17:57:05 by cazerini         ###   ########.fr       */
+/*   Updated: 2025/07/29 10:51:20 by sfiorini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,24 +200,29 @@ void	init(t_program *prg, char *map_name);
 	void	free_parsing(t_program *prg);
 	//	exec
 		// 3d_calculations.c
+		void	correct_color(t_exec *exec, char **img_data, float *ofset_x, int status);
 		int		get_color(t_exec *exec, int ofset_y, float ofset_x, int status);
 		void	draw_vertical_line(t_exec *exec, int x, float distance, int status);
-		float	module(float x1, float y1, float x2, float y2, t_player *p);
+		float	module(t_exec *exec);
 		float	calculate_distance(t_exec *exec, float angle);
 		void	tred_word(t_exec *exec, int status);
 		// close.c
 		void	free_exec(t_exec *exec);
 		// draw.c
+		int		draw_player(t_exec *exec, int v);
+		void	draw_bg(t_exec *exec, int color_f, int color_c);
+		void	draw_animation(t_exec *exec);
+		int		draw_map(t_exec *exec);
+		void	draw_shotgun(t_exec *exec);
+		// draw_loop
+		void	if_animation(t_exec *exec, int *j);
+		int		draw_loop(t_exec *exec);
+		// draw_utils
 		void	put_pixel(int x, int y, int color, t_exec *exec);
 		void	draw_square(float x, float y, int color, t_exec *exec);
-		int		draw_map(t_exec *exec);
 		int		touch_orient(t_exec *exec, int x_prev, int y_prev);
 		int		touch(float x, float y, char **map);
 		void	draw_line(t_exec *exec, float x, float y, float angle);
-		int		draw_player(t_exec *exec, int v);
-		void	draw_bg(t_exec *exec, int color_f, int color_c);
-		int		draw_loop(t_exec *exec);
-		void	draw_animation(t_exec *exec);
 		// exec.c
 		int		exec(t_program *prg);
 		void	init_exec(t_program *prg);

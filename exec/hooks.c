@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hooks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cazerini <cazerini@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sfiorini <sfiorini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 17:53:45 by sfiorini          #+#    #+#             */
-/*   Updated: 2025/07/28 15:03:20 by cazerini         ###   ########.fr       */
+/*   Updated: 2025/07/29 12:06:23 by sfiorini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,60 +19,69 @@ int	mouse_controls(t_program *prg)
 	return (0);
 }
 
+void	check_nord_sud(t_program *prg, int *i)
+{
+	if (prg->exec.p.angle > (PI / 2 - PI / 6) \
+	&& prg->exec.p.angle < (PI / 2 + PI / 6))
+	{
+		while (++(*i) < 3)
+		{
+			if (prg->map[(int)prg->exec.p.x][(int)prg->exec.p.y - *i] == 'D')
+			{
+				prg->map[(int)prg->exec.p.x][(int)prg->exec.p.y - *i] = '0';
+				break ;
+			}
+		}
+	}
+	if (prg->exec.p.angle > (3 * PI / 2 - PI / 6) \
+	&& prg->exec.p.angle < (3 * PI / 2 + PI / 6))
+	{
+		while (++(*i) < 3)
+		{
+			if (prg->map[(int)prg->exec.p.x][(int)prg->exec.p.y + *i] == 'D')
+			{
+				prg->map[(int)prg->exec.p.x][(int)prg->exec.p.y + *i] = '0';
+				break ;
+			}
+		}
+	}
+}
+void	check_ovest_est(t_program *prg, int *i)
+{
+	if ((prg->exec.p.angle >= (2 * PI - PI / 6) \
+	&& prg->exec.p.angle <= (2 * PI)) || \
+	(prg->exec.p.angle >= 0 && prg->exec.p.angle <= PI / 6))
+	{
+		while (++(*i) < 3)
+		{
+			if (prg->map[(int)prg->exec.p.x - *i][(int)prg->exec.p.y] == 'D')
+			{
+				prg->map[(int)prg->exec.p.x - *i][(int)prg->exec.p.y] = '0';
+				break ;
+			}
+		}
+	}
+	if ((prg->exec.p.angle >= (PI - PI / 6) \
+	&& prg->exec.p.angle <= (PI + PI / 6)))
+	{
+		while (++(*i) < 3)
+		{
+			if (prg->map[(int)prg->exec.p.x + *i][(int)prg->exec.p.y] == 'D')
+			{
+				prg->map[(int)prg->exec.p.x + *i][(int)prg->exec.p.y] = '0';
+				break ;
+			}
+		}
+	}
+}
+
 void	open_door(t_program *prg)
 {
 	int	i;
 
-	i = 0;
-	if (prg->exec.p.angle > (PI / 2 - PI / 6) && prg->exec.p.angle < (PI / 2 + PI / 6))
-	{
-		while (i < 3)
-		{
-			if (prg->map[(int)prg->exec.p.x][(int)prg->exec.p.y - i] == 'D')
-			{
-				prg->map[(int)prg->exec.p.x][(int)prg->exec.p.y - i] = '0';
-				break ;
-			}
-			i++;
-		}
-	}
-	if (prg->exec.p.angle > ( 3 * PI / 2 - PI / 6) && prg->exec.p.angle < (3 * PI / 2 + PI / 6))
-	{
-		while (i < 3)
-		{
-			if (prg->map[(int)prg->exec.p.x][(int)prg->exec.p.y + i] == 'D')
-			{
-				prg->map[(int)prg->exec.p.x][(int)prg->exec.p.y + i] = '0';
-				break ;
-			}
-			i++;
-		}
-	}
-	if ((prg->exec.p.angle >= (2 * PI - PI / 6) && prg->exec.p.angle <= (2 * PI)) || \
-	(prg->exec.p.angle >= 0 && prg->exec.p.angle <= PI / 6))
-	{
-		while (i < 3)
-		{
-			if (prg->map[(int)prg->exec.p.x - i][(int)prg->exec.p.y] == 'D')
-			{
-				prg->map[(int)prg->exec.p.x - i][(int)prg->exec.p.y] = '0';
-				break ;
-			}
-			i++;
-		}
-	}
-	if ((prg->exec.p.angle >= (PI - PI / 6) && prg->exec.p.angle <= (PI + PI / 6)))
-	{
-		while (i < 3)
-		{
-			if (prg->map[(int)prg->exec.p.x + i][(int)prg->exec.p.y] == 'D')
-			{
-				prg->map[(int)prg->exec.p.x + i][(int)prg->exec.p.y] = '0';
-				break ;
-			}
-			i++;
-		}
-	}
+	i = -1;
+	check_nord_sud(prg, &i);
+	check_ovest_est(prg, &i);
 }
 
 int	key_controls(int keysim, t_program *prg)
@@ -99,7 +108,7 @@ int	key_controls(int keysim, t_program *prg)
 	return (0);
 }
 
-int key_release(int keycode, t_exec *exec)
+int	key_release(int keycode, t_exec *exec)
 {
 	if (keycode == 100)
 		exec->p.move_right = FALSE;
