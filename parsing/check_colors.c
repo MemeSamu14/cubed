@@ -6,7 +6,7 @@
 /*   By: sfiorini <sfiorini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 18:24:35 by sfiorini          #+#    #+#             */
-/*   Updated: 2025/06/23 16:38:44 by sfiorini         ###   ########.fr       */
+/*   Updated: 2025/07/29 17:26:21 by sfiorini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,6 @@ int	check_code(t_program *prg)
 {
 	if (color_code_limits(prg) == ERROR)
 	{
-		free_matrix(prg->code_f);
-		free_matrix(prg->code_c);
 		write(2, "Error\nInvalid color numbers\n", 28);
 		return (ERROR);
 	}
