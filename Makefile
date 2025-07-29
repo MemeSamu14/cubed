@@ -19,13 +19,15 @@ SRC = main.c \
 	close.c \
 	exec/exec.c \
 	exec/hooks.c \
+	exec/hooks_2.c \
 	exec/draw.c \
 	exec/draw_utils.c \
 	exec/draw_loop.c \
 	exec/movements.c \
 	exec/3d_calculations.c \
 	exec/3d_calculations_utils.c \
-	exec/exec_init.c
+	exec/exec_init_1.c \
+	exec/exec_init_2.c
 
 all: $(NAME)
 

@@ -6,18 +6,11 @@
 /*   By: sfiorini <sfiorini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 17:53:45 by sfiorini          #+#    #+#             */
-/*   Updated: 2025/07/29 12:06:23 by sfiorini         ###   ########.fr       */
+/*   Updated: 2025/07/29 16:59:24 by sfiorini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cubed.h"
-
-int	mouse_controls(t_program *prg)
-{
-	free_all(prg);
-	exit(1);
-	return (0);
-}
 
 void	check_nord_sud(t_program *prg, int *i)
 {
@@ -46,6 +39,7 @@ void	check_nord_sud(t_program *prg, int *i)
 		}
 	}
 }
+
 void	check_ovest_est(t_program *prg, int *i)
 {
 	if ((prg->exec.p.angle >= (2 * PI - PI / 6) \

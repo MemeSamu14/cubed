@@ -6,7 +6,7 @@
 /*   By: sfiorini <sfiorini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/15 10:42:12 by sfiorini          #+#    #+#             */
-/*   Updated: 2025/07/29 12:21:35 by sfiorini         ###   ########.fr       */
+/*   Updated: 2025/07/29 16:54:34 by sfiorini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	set_texture_path(t_program *prg)
 	free(tmp);
 }
 
-void	create_images(t_program *prg, int *width, int* height)
+void	create_images(t_program *prg, int *width, int *height)
 {
 	prg->exec.t.img_n = mlx_xpm_file_to_image(prg->exec.mlx, \
 		prg->no, width, height);
@@ -60,14 +60,14 @@ void	create_images(t_program *prg, int *width, int* height)
 		prg->ea, width, height);
 	prg->exec.t.img_o = mlx_xpm_file_to_image(prg->exec.mlx, \
 		prg->we, width, height);
-	prg->exec.t.img_o1 = mlx_xpm_file_to_image(prg->exec.mlx,\
-		 "texture/piccoletto1.xpm", width, height);
-	prg->exec.t.img_o2 = mlx_xpm_file_to_image(prg->exec.mlx,\
-		 "texture/piccoletto2.xpm", width, height);
+	prg->exec.t.img_o1 = mlx_xpm_file_to_image(prg->exec.mlx, \
+		"texture/piccoletto1.xpm", width, height);
+	prg->exec.t.img_o2 = mlx_xpm_file_to_image(prg->exec.mlx, \
+		"texture/piccoletto2.xpm", width, height);
 	prg->exec.t.img_d = mlx_xpm_file_to_image(prg->exec.mlx, \
 		"texture/door.xpm", width, height);
-	prg->exec.t.img_shotgun = mlx_xpm_file_to_image(prg->exec.mlx,\
-		 "texture/shotgun.xpm", width, height);
+	prg->exec.t.img_shotgun = mlx_xpm_file_to_image(prg->exec.mlx, \
+		"texture/shotgun.xpm", width, height);
 	prg->exec.t.img_shoot = mlx_xpm_file_to_image(prg->exec.mlx, \
 		"texture/shoot.xpm", width, height);
 }
@@ -75,57 +75,24 @@ void	create_images(t_program *prg, int *width, int* height)
 void	create_dataset(t_program *prg)
 {
 	prg->exec.t.xpm_shotgun = mlx_get_data_addr(prg->exec.t.img_shotgun, \
-		&prg->exec.t.bpp,&prg->exec.t.size_line, &prg->exec.t.endian);
+		&prg->exec.t.bpp, &prg->exec.t.size_line, &prg->exec.t.endian);
 	prg->exec.t.xpm_shoot = mlx_get_data_addr(prg->exec.t.img_shoot, \
 		&prg->exec.t.bpp, &prg->exec.t.size_line, &prg->exec.t.endian);
 	prg->exec.t.xpm_n = mlx_get_data_addr(prg->exec.t.img_n, &prg->exec.t.bpp, \
-		 &prg->exec.t.size_line, &prg->exec.t.endian);
+		&prg->exec.t.size_line, &prg->exec.t.endian);
 	prg->exec.t.xpm_s = mlx_get_data_addr(prg->exec.t.img_s, &prg->exec.t.bpp, \
-		 &prg->exec.t.size_line, &prg->exec.t.endian);
+		&prg->exec.t.size_line, &prg->exec.t.endian);
 	prg->exec.t.xpm_e = mlx_get_data_addr(prg->exec.t.img_e, &prg->exec.t.bpp, \
-		 &prg->exec.t.size_line, &prg->exec.t.endian);
+		&prg->exec.t.size_line, &prg->exec.t.endian);
 	prg->exec.t.xpm_o = mlx_get_data_addr(prg->exec.t.img_o, &prg->exec.t.bpp, \
-		 &prg->exec.t.size_line, &prg->exec.t.endian);
-	prg->exec.t.xpm_o1 = mlx_get_data_addr(prg->exec.t.img_o1, &prg->exec.t.bpp, \
-		 &prg->exec.t.size_line, &prg->exec.t.endian);
-	prg->exec.t.xpm_o2 = mlx_get_data_addr(prg->exec.t.img_o2, &prg->exec.t.bpp, \
-		 &prg->exec.t.size_line, &prg->exec.t.endian);
+		&prg->exec.t.size_line, &prg->exec.t.endian);
+	prg->exec.t.xpm_o1 = mlx_get_data_addr(prg->exec.t.img_o1, \
+		&prg->exec.t.bpp, &prg->exec.t.size_line, &prg->exec.t.endian);
+	prg->exec.t.xpm_o2 = mlx_get_data_addr(prg->exec.t.img_o2, \
+		&prg->exec.t.bpp, &prg->exec.t.size_line, &prg->exec.t.endian);
 	prg->exec.t.xpm_d = mlx_get_data_addr(prg->exec.t.img_d, &prg->exec.t.bpp, \
-		 &prg->exec.t.size_line, &prg->exec.t.endian);
-}	
-
-void	init_texture(t_program *prg)
-{
-	int		height;
-	int		width;
-
-	height = BLOCK;
-	width = BLOCK;
-	set_texture_path(prg);
-	create_images(prg, &width, &height);
-	create_dataset(prg);
+		&prg->exec.t.size_line, &prg->exec.t.endian);
 }
-
-
-void	init_color(t_program *prg)
-{
-	int	red;
-	int	green;
-	int	blue;
-
-	red = ft_atoi(prg->code_c[0]);
-	green = ft_atoi(prg->code_c[1]);
-	blue = ft_atoi(prg->code_c[2]);
-	prg->exec.color_c = ((red & 0xFF) << 16) \
-	| ((green & 0xFF) << 8) | (blue & 0xFF);
-
-	red = ft_atoi(prg->code_f[0]);
-	green = ft_atoi(prg->code_f[1]);
-	blue = ft_atoi(prg->code_f[2]);
-	prg->exec.color_f = ((red & 0xFF) << 16) \
-	| ((green & 0xFF) << 8) | (blue & 0xFF);
-}
-
 
 void	init_exec(t_program *prg)
 {
@@ -140,6 +107,3 @@ void	init_exec(t_program *prg)
 	prg->exec.data = mlx_get_data_addr(prg->exec.img, &prg->exec.bpp, \
 		&prg->exec.size_line, &prg->exec.endian);
 }
-
-
-

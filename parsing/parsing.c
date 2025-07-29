@@ -6,7 +6,7 @@
 /*   By: sfiorini <sfiorini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 10:57:34 by sfiorini          #+#    #+#             */
-/*   Updated: 2025/07/26 09:57:05 by sfiorini         ###   ########.fr       */
+/*   Updated: 2025/07/29 17:07:39 by sfiorini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	change_player_id(t_program *prg)
 				prg->map[i][j] == 'W' || \
 				prg->map[i][j] == 'E')
 			{
-				prg->orientation = prg->map[i][j]; 
+				prg->orientation = prg->map[i][j];
 				prg->map[i][j] = 'P';
 				return ;
 			}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   movements.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cazerini <cazerini@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sfiorini <sfiorini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 11:06:05 by sfiorini          #+#    #+#             */
-/*   Updated: 2025/07/28 16:32:17 by cazerini         ###   ########.fr       */
+/*   Updated: 2025/07/29 17:18:25 by sfiorini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,17 +32,12 @@ void	rotation(t_player *p)
 		p->angle = 2 * PI;
 }
 
-void	movement(t_player *p, char **map)
+void	vertical_move(t_player *p, float sin_a, float cos_a, char **map)
 {
-	float	sin_a;
-	float	cos_a;
-
-	sin_a = sin(p->angle);
-	cos_a = cos(p->angle);
-
 	if (p->move_up == TRUE)
 	{
-		if (touch(p->x - (cos_a * (SPEED * 10)), p->y - (sin_a * (SPEED * 10)), map) == FALSE)
+		if (touch(p->x - (cos_a * (SPEED * 10)), p->y \
+		- (sin_a * (SPEED * 10)), map) == FALSE)
 		{
 			p->x -= cos_a * SPEED;
 			p->y -= sin_a * SPEED;
@@ -50,15 +45,21 @@ void	movement(t_player *p, char **map)
 	}
 	if (p->move_down == TRUE)
 	{
-		if (touch(p->x + (cos_a * (SPEED * 10)), p->y + (sin_a * (SPEED * 10)), map) == FALSE)
+		if (touch(p->x + (cos_a * (SPEED * 10)), p->y \
+		+ (sin_a * (SPEED * 10)), map) == FALSE)
 		{
 			p->x += cos_a * SPEED;
 			p->y += sin_a * SPEED;
 		}
 	}
+}
+
+void	orizzontal_move(t_player *p, float sin_a, float cos_a, char **map)
+{
 	if (p->move_right == TRUE)
 	{
-		if (touch(p->x + (sin_a * (SPEED * 3)), p->y - (cos_a * (SPEED * 3)), map) == FALSE)
+		if (touch(p->x + (sin_a * (SPEED * 3)), p->y \
+		- (cos_a * (SPEED * 3)), map) == FALSE)
 		{
 			p->x += sin_a * SPEED;
 			p->y -= cos_a * SPEED;
@@ -66,11 +67,22 @@ void	movement(t_player *p, char **map)
 	}
 	if (p->move_left == TRUE)
 	{
-		if (touch(p->x - (sin_a * (SPEED * 3)), p->y + (cos_a * (SPEED * 3)), map) == FALSE)
+		if (touch(p->x - (sin_a * (SPEED * 3)), p->y \
+		+ (cos_a * (SPEED * 3)), map) == FALSE)
 		{
 			p->x -= sin_a * SPEED;
 			p->y += cos_a * SPEED;
 		}
 	}
+}
 
+void	movement(t_player *p, char **map)
+{
+	float	sin_a;
+	float	cos_a;
+
+	sin_a = sin(p->angle);
+	cos_a = cos(p->angle);
+	vertical_move(p, sin_a, cos_a, map);
+	orizzontal_move(p, sin_a, cos_a, map);
 }
