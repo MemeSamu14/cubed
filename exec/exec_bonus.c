@@ -6,7 +6,7 @@
 /*   By: sfiorini <sfiorini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/15 10:42:12 by sfiorini          #+#    #+#             */
-/*   Updated: 2025/07/29 17:44:27 by sfiorini         ###   ########.fr       */
+/*   Updated: 2025/07/29 16:54:59 by sfiorini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ int	exec(t_program *prg)
 	mlx_hook(prg->exec.win, 2, 1L << 0, key_controls, prg);
 	mlx_hook(prg->exec.win, 3, 1L << 1, key_release, &prg->exec);
 	mlx_hook(prg->exec.win, 17, 1L << 3, mouse_controls, prg);
+	mlx_hook(prg->exec.win, 6, 1L << 6, pointer, prg);
+	mlx_hook(prg->exec.win, 4, 1L << 2, shoot, prg);
 	init_texture(prg);
 	mlx_loop_hook(prg->exec.mlx, draw_loop, &prg->exec);
 	mlx_loop(prg->exec.mlx);
