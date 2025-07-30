@@ -1,4 +1,4 @@
-NAME = cubed
+NAME = cub3D
 
 UTILS = utils/utils.a
 UTILS_DIR = utils/

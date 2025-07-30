@@ -6,7 +6,7 @@
 /*   By: sfiorini <sfiorini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 10:45:23 by sfiorini          #+#    #+#             */
-/*   Updated: 2025/07/29 17:07:19 by sfiorini         ###   ########.fr       */
+/*   Updated: 2025/07/30 12:28:41 by sfiorini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,8 +177,8 @@ void	free_matrix_len(char **matrix, int len);
 char	**matrix_dup(char **old_mtx);
 	//	check_map
 int		check_map(t_program *prg);
-void	init_map(t_program *prg);
-void	add_line(t_program *prg, int i);
+int		init_map(t_program *prg);
+int		add_line(t_program *prg, int i);
 void	add_space_line(t_program *prg, int i);
 	//	check_map_2
 int		alloc_map(t_program *prg);
