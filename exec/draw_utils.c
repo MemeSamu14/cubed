@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sfiorini <sfiorini@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cazerini <cazerini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/15 11:24:41 by sfiorini          #+#    #+#             */
-/*   Updated: 2025/07/29 11:54:54 by sfiorini         ###   ########.fr       */
+/*   Updated: 2025/07/31 16:19:36 by cazerini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,14 +71,17 @@ int	touch_orient(t_exec *exec, int x_prev, int y_prev)
 	if ((int)exec->view_y > y_prev)
 		exec->orientation = SUD;
 	if (exec->map[(int)exec->view_x][(int)exec->view_y] == '1' || \
-	exec->map[(int)exec->view_x][(int)exec->view_y] == 'D')
+	exec->map[(int)exec->view_x][(int)exec->view_y] == 'D' || \
+	exec->map[(int)exec->view_x][(int)exec->view_y] == ' ')
 		return (TRUE);
 	return (FALSE);
 }
 
 int	touch(float x, float y, char **map)
 {
-	if (map[(int)x][(int)y] == '1' || map[(int)x][(int)y] == 'D')
+	
+	if (map[(int)x][(int)y] == '1' || map[(int)x][(int)y] == 'D' || \
+	map[(int)x][(int)y] == ' ')
 		return (TRUE);
 	return (FALSE);
 }

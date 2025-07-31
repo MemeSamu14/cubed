@@ -1,10 +1,1 @@
                         
-NO ./wall_nord.xpm
-SO ./wall_sud.xpm
-WE ./wall_ovest.xpm
-EA ./wall_est.xpm
-
-F 182,170,112
-C 178,255,255
-
-
