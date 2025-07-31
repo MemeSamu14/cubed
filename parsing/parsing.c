@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sfiorini <sfiorini@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cazerini <cazerini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 10:57:34 by sfiorini          #+#    #+#             */
-/*   Updated: 2025/07/29 17:07:39 by sfiorini         ###   ########.fr       */
+/*   Updated: 2025/07/31 16:39:28 by cazerini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 int	parsing(t_program *prg)
 {
+	int	value;
+
 	if (check_exetension(prg) == ERROR)
 		return (ERROR);
 	if (existing_check(prg) == ERROR)
@@ -22,12 +24,15 @@ int	parsing(t_program *prg)
 		return (ERROR);
 	if (check_info_valid(prg) == ERROR)
 	{
-		free_parsing(prg);
+		free_parsing_1(prg);
 		return (ERROR);
 	}
-	if (check_map(prg) == ERROR)
+	value = check_map(prg);
+	if (value == ERROR)
+		return (free_parsing_1(prg), ERROR);
+	if (value == WRONG)
 	{
-		free_parsing(prg);
+		free_parsing_2(prg);
 		return (ERROR);
 	}
 	change_player_id(prg);

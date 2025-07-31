@@ -6,7 +6,7 @@
 /*   By: cazerini <cazerini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 18:27:54 by sfiorini          #+#    #+#             */
-/*   Updated: 2025/07/31 15:48:02 by cazerini         ###   ########.fr       */
+/*   Updated: 2025/07/31 16:39:09 by cazerini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,15 @@
 
 int	check_map(t_program *prg)
 {
+	int	value;
+
 	if (alloc_map(prg) == ERROR)
 		return (ERROR);
-	if (init_map(prg) == ERROR)
+	value = init_map(prg);
+	if (value == ERROR)
 		return (ERROR);
+	if (value == WRONG)
+		return (WRONG);
 	if (valid_map_char(prg) == ERROR)
 		return (ERROR);
 	if (check_walls(prg) == ERROR)
@@ -34,7 +39,7 @@ int	init_map(t_program *prg)
 	skippers(prg, fd);
 	add_space_line(prg, 0);
 	if (add_line(prg, 1) == ERROR)
-		return (ERROR);
+		return (WRONG);
 	i = 2;
 	while (1)
 	{
@@ -42,7 +47,7 @@ int	init_map(t_program *prg)
 		if (prg->buff == NULL)
 			break ;
 		if (add_line(prg, i) == ERROR)
-			return (ERROR);
+			return (WRONG);
 		i++;
 	}
 	add_space_line(prg, i);

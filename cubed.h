@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cubed.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sfiorini <sfiorini@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cazerini <cazerini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 10:45:23 by sfiorini          #+#    #+#             */
-/*   Updated: 2025/07/30 12:28:41 by sfiorini         ###   ########.fr       */
+/*   Updated: 2025/07/31 16:29:16 by cazerini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,7 +193,9 @@ int		is_valid_char(t_program *prg, int i, int j);
 int		is_texture(t_program *prg, int i, int j);
 	//	close.c
 void	free_all(t_program *prg);
-void	free_parsing(t_program *prg);
+void	free_parsing_1(t_program *prg);
+void	free_parsing_2(t_program *prg);
+void	free_exec(t_exec *exec);
 	//	exec
 		// 3d_calculations.c
 void	correct_color(t_exec *exec, char **img_data, \
@@ -203,8 +205,6 @@ void	draw_vertical_line(t_exec *exec, int x, float distance, int status);
 float	module(t_exec *exec);
 float	calculate_distance(t_exec *exec, float angle);
 void	tred_word(t_exec *exec, int status);
-		// close.c
-void	free_exec(t_exec *exec);
 		// draw.c
 int		draw_player(t_exec *exec, int v);
 void	draw_bg(t_exec *exec, int color_f, int color_c);

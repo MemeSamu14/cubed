@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   close.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sfiorini <sfiorini@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cazerini <cazerini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 13:46:44 by sfiorini          #+#    #+#             */
-/*   Updated: 2025/07/30 12:45:34 by sfiorini         ###   ########.fr       */
+/*   Updated: 2025/07/31 16:39:54 by cazerini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,22 @@ void	free_all(t_program *prg)
 	free_exec(&prg->exec);
 }
 
-void	free_parsing(t_program *prg)
+void	free_parsing_1(t_program *prg)
 {
-	// free_matrix(prg->map);
+	free_matrix(prg->map);
+	free(prg->map_name);
+	free(prg->no);
+	free(prg->so);
+	free(prg->we);
+	free(prg->ea);
+	free(prg->f);
+	free(prg->c);
+	free_matrix(prg->code_f);
+	free_matrix(prg->code_c);
+}
+
+void	free_parsing_2(t_program *prg)
+{
 	free(prg->map[0]);
 	free(prg->map[1]);
 	free(prg->map[2]);

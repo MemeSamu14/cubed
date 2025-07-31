@@ -6,7 +6,7 @@
 /*   By: cazerini <cazerini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/15 11:24:41 by sfiorini          #+#    #+#             */
-/*   Updated: 2025/07/31 16:19:36 by cazerini         ###   ########.fr       */
+/*   Updated: 2025/07/31 16:39:43 by cazerini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@ int	touch_orient(t_exec *exec, int x_prev, int y_prev)
 
 int	touch(float x, float y, char **map)
 {
-	
 	if (map[(int)x][(int)y] == '1' || map[(int)x][(int)y] == 'D' || \
 	map[(int)x][(int)y] == ' ')
 		return (TRUE);
