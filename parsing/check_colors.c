@@ -6,7 +6,7 @@
 /*   By: sfiorini <sfiorini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 18:24:35 by sfiorini          #+#    #+#             */
-/*   Updated: 2025/07/29 17:26:21 by sfiorini         ###   ########.fr       */
+/*   Updated: 2025/08/04 11:12:12 by sfiorini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,7 @@ int	check_numbers(t_program *prg)
 	prg->code_c = ft_split(prg->c, ',');
 	if (matrix_len(prg->code_f) != 3 || matrix_len(prg->code_c) != 3)
 	{
-		free_matrix(prg->code_c);
-		free_matrix(prg->code_f);
-		write(2, "Error\nIvalid Color code\n", 24);
+		write(2, "Error\nInvalid Color code\n", 25);
 		return (ERROR);
 	}
 	return (CORRECT);
@@ -81,21 +79,21 @@ int	check_char(t_program *prg)
 		while (prg->f && prg->f[++i])
 		{
 			if ((prg->f[i] < '0' || prg->f[i] > '9') && prg->f[i] != ',')
-				return (write(2, "Error\nF: Ivalid color code\n", 27), ERROR);
+				return (write(2, "Error\nF: Invalid color code\n", 28), ERROR);
 		}
 	}
 	else
-		return (write(2, "Error\nF: Ivalid color code\n", 27), ERROR);
+		return (write(2, "Error\nF: Invalid color code\n", 28), ERROR);
 	i = -1;
 	if (prg->c)
 	{
 		while (prg->c && prg->c[++i])
 		{
 			if ((prg->c[i] < '0' || prg->c[i] > '9') && prg->c[i] != ',')
-				return (write(2, "Error\nC: Ivalid color code\n", 27), ERROR);
+				return (write(2, "Error\nC: Invalid color code\n", 28), ERROR);
 		}
 	}
 	else
-		return (write(2, "Error\nC: Ivalid color code\n", 27), ERROR);
+		return (write(2, "Error\nC: Invalid color code\n", 28), ERROR);
 	return (CORRECT);
 }
