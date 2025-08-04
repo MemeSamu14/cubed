@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cazerini <cazerini@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sfiorini <sfiorini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 10:57:34 by sfiorini          #+#    #+#             */
-/*   Updated: 2025/07/31 16:39:28 by cazerini         ###   ########.fr       */
+/*   Updated: 2025/08/04 10:58:23 by sfiorini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ int	parsing(t_program *prg)
 	int	value;
 
 	if (check_exetension(prg) == ERROR)
-		return (ERROR);
+		return (free(prg->map_name), ERROR);
 	if (existing_check(prg) == ERROR)
-		return (ERROR);
+		return (free(prg->map_name), ERROR);
 	if (check_info(prg) == ERROR)
 		return (ERROR);
 	if (check_info_valid(prg) == ERROR)
